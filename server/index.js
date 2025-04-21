@@ -8,7 +8,9 @@ import onConnection from './socket_io/onConnection.js'
 import { getFilePath } from './utils/file.js'
 import onError from './utils/onError.js'
 import upload from './utils/upload.js'
-
+import cookieParser from 'cookie-parser'
+import doctorRoutes from './routes/doctor.route.js'
+import patientRoutes from './routes/patient.route.js'
 const app = express()
 
 app.use(
@@ -33,8 +35,10 @@ app.use('/files', (req, res) => {
 
   res.status(200).sendFile(filePath)
 })
-
+app.use(cookieParser())
 app.use(onError)
+app.use('/doctor',doctorRoutes)
+app.use('/patient',patientRoutes)
 
 try {
   await mongoose.connect(MONGODB_URI, {

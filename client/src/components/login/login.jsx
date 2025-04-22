@@ -1,23 +1,17 @@
 import { useState } from 'react'
 import "./login.css"
-
-function checkData(name, pass){
-    //поиск в бд возвращает тру или фолс
-    if(name === NULL && pass === NULL){
-        return true;
-    }
-    return false;
-}
+import {handleLogin} from '..../auth.js'
+//скорее всего auth надо будет поближе пенести или вообще сюда засунуть
 export const login = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        const isValid = checkData(userName, password);
-        if (isValid) {
-            console.log('Успешный вход');
+    const hanLogin = () => {
+        const data = handleLogin(userName, password);
+        if (data === null) {
+            console.log('Response is not ok');
         } else {
-            console.log('Ошибка входа');
+            console.log('Response ok');
         }
     };
 
@@ -37,7 +31,7 @@ export const login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button className="LoginButton" type="submit" onClick={handleLogin}>
+            <button className="LoginButton" type="submit" onClick={hanLogin}>
                 Log In
             </button>
         </div>

@@ -21,7 +21,7 @@ const doctorSchema = new Schema({
         required: true
     },
     patients:[{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         required: false
     }],
     passwordHash: {

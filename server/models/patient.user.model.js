@@ -30,7 +30,7 @@ const patientSchema = new Schema({
         required: false
     },
     doctors:[{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         required: false
     }],
     passwordHash: {

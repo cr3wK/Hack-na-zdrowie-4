@@ -31,6 +31,7 @@ const patientSchema = new Schema({
     },
     doctors:[{
         type:mongoose.Schema.Types.ObjectId,
+        ref:'user.doctor',
         required: false
     }],
     passwordHash: {

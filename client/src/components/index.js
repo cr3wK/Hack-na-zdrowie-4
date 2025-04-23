@@ -1,2 +1,2 @@
-export { NameInput } from './NameInput/NameInput'
-export { Room } from './Room/Room'
+export { NameInput } from './mainPage/NameInput/NameInput'
+export { Room } from './mainPage/Room/Room'

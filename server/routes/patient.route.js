@@ -69,4 +69,27 @@ router.post('/login', async (req, res, next) => {
         res.json({ ok: true, name: patient.name, surname: patient.surname });
     } catch (e) { next(e); }
 });
+
+router.get(['/:patientId', '/'], async (req, res, next) => {
+    try {
+        const patientId = req.params.patientId || req.query.patientId;
+
+        if (!patientId) {
+            return res.status(400).json({ error: 'patientId is required' });
+        }
+
+        const patient = await Patient
+            .findById(patientId)
+            .select('-passwordHash -patients')
+            .lean();
+
+        if (!patient) {
+            return res.status(404).json({ error: 'patient not found' });
+        }
+
+        res.json(patient);
+    } catch (err) {
+        next(err);
+    }
+});
 export default router;

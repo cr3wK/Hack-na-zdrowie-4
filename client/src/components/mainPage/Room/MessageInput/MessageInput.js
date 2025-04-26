@@ -39,9 +39,9 @@ export default function MessageInput({ sendMessage }) {
     const { userId, name, roomId } = user
     let message = {
       messageId: nanoid(),
-      userId,
-      name,
-      roomId
+      userId: userId,
+      userName: name,
+      roomId: roomId
     }
 
     if (!file) {

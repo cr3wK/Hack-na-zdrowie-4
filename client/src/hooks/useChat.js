@@ -20,6 +20,7 @@ export default function useChat() {
   )
 
   useEffect(() => {
+    console.log(socket);
     socket.emit('user:add', user)
     socket.emit('message:get')
     socket.emit('room_list:get')

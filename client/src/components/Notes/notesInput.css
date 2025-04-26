@@ -1,0 +1,26 @@
+.notes-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.notes-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.notes-input button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.notes-input button:hover {
+    background-color: #0056b3;
+}

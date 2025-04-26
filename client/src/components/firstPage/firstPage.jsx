@@ -1,6 +1,7 @@
 import './firstPage.css';
 import { useState } from 'react';
 import { Login } from '../login/login.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export const FirstPage = () => {
     const [click, setClick] = useState(false);
@@ -8,12 +9,8 @@ export const FirstPage = () => {
     const handleClick = () => {
         setClick(true);
     };
-
+    const navigate = useNavigate();
     return (
-        <>
-            {click ? (
-                <Login />
-            ) : (
                 <>
                     <body>
                     <main className="container">
@@ -21,7 +18,7 @@ export const FirstPage = () => {
                         <p className="subtitle">Łatwy dostęp do informacji i możliwość rozmowy z lekarzem lub
                             opiekunem.</p>
 
-                        <button onClick={handleClick}> className="btn-main">Konto pacjenta</button>
+                        <button onClick={() => navigate('/login')}> className="btn-main">Konto pacjenta</button>
                         <p className="hint">(Kliknij tutaj, aby rozpocząć)</p>
 
                         <div className="info-box">
@@ -42,7 +39,5 @@ export const FirstPage = () => {
                     </main>
                     </body>
                 </>
-            )}
-        </>
     );
 };

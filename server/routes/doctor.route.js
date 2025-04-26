@@ -47,7 +47,7 @@ router.post('/login', async (req, res, next) => {
             maxAge: 15 * 60 * 1000
         });
 
-        res.json({ok: true, name: doctor.name, surname: doctor.surname});
+        res.json({ok: true, name: doctor.name, surname: doctor.surname, roomId: doctor.roomIds[0]});
     } catch (e) {
         next(e);
     }
@@ -95,13 +95,13 @@ router.patch('/add_patient', async (
         const patient = await Patient.findOne({pesel: patientPesel});
         if (!patient) return res.sendStatus(404);
         patient.doctors.addToSet(doctor._id);
+        const roomId = `${doctor.id}_${patient.id}`;
+        patient.roomIds.addToSet(roomId);
         await patient.save();
         //create a room
-        const roomId = `${doctor.id}_${patient.id}`;
-        console.log(roomId)
-
 
         doctor.patients.addToSet(patient._id);
+        doctor.roomIds.addToSet(roomId);
         await doctor.save();
 
         res.status(200).json({roomId: roomId});

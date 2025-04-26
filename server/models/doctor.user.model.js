@@ -28,6 +28,10 @@ const doctorSchema = new Schema({
         ref:'user.patient',
         required: false
     }],
+    roomIds:[{
+        type: String,
+        required: false
+    }],
     passwordHash: {
         type: String,
         required: true

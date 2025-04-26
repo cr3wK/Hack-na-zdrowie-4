@@ -34,6 +34,10 @@ const patientSchema = new Schema({
         ref:'user.doctor',
         required: false
     }],
+    roomIds:[{
+        type: String,
+        required: false
+    }],
     passwordHash: {
         type: String,
         required: true

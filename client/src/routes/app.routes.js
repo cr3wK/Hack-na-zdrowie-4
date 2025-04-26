@@ -10,7 +10,7 @@ const AppRoutes = () => (
         {/* Основные маршруты */}
         <Routes>
             <Route path="/" element={<Home />} />
-            {/* Убираем MainPage как страницу */}
+
             <Route path="*" element={<Home />} />
         </Routes>
     </div>

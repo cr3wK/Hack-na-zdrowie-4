@@ -1,0 +1,13 @@
+.notes {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.notes h2 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.5rem;
+}

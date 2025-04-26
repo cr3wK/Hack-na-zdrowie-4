@@ -1,0 +1,72 @@
+/* mainPage.css */
+
+/* Затемнение фона (Оверлей) */
+.main-page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    z-index: 1000; /* Выводим поверх всего */
+    display: flex;
+    justify-content: flex-end; /* Окно будет смещено вправо */
+}
+
+/* Окно, размещенное справа */
+.main-page {
+    position: relative;
+    background-color: #ffffff; /* Белый фон окна */
+    border-radius: 10px 0 0 10px; /* Скругленные углы слева */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); /* Тень слева */
+    width: 400px; /* Фиксированная ширина */
+    max-width: 80%; /* Ограничиваем ширину, если экран маленький */
+    height: 100vh; /* Высота на весь экран */
+    padding: 20px 30px;
+    text-align: left; /* Выравнивание текста */
+    animation: slide-in 0.3s ease-out; /* Анимация появления */
+}
+
+/* Анимация появления окна справа */
+@keyframes slide-in {
+    from {
+        transform: translateX(100%); /* Начинаем за границей экрана */
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0); /* Полностью видно */
+        opacity: 1;
+    }
+}
+
+/* Общие стили для текста */
+.main-page-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #007bff;
+    font-family: 'Arial', sans-serif;
+}
+
+.main-page-description {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Кнопка Закрытия */
+.main-page-close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px; /* Переносим кнопку влево, так как окно справа */
+    background-color: transparent;
+    border: none;
+    color: #999;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.main-page-close-btn:hover {
+    color: #000; /* При наведении кнопка становится темной */
+}

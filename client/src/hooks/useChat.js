@@ -14,12 +14,13 @@ export default function useChat() {
       io(SERVER_URI, {
         query: {
           roomId: user.roomId,
-          userName: user.userName
+          userName: user.name
         }
       })
   )
 
   useEffect(() => {
+    console.log(socket);
     socket.emit('user:add', user)
     socket.emit('message:get')
     socket.emit('room_list:get')

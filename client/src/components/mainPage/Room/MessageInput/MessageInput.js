@@ -36,12 +36,12 @@ export default function MessageInput({ sendMessage }) {
     e.preventDefault()
     if (submitDisabled) return
 
-    const { userId, userName, roomId } = user
+    const { userId, name, roomId } = user
     let message = {
       messageId: nanoid(),
-      userId,
-      userName,
-      roomId
+      userId: userId,
+      userName: name,
+      roomId: roomId
     }
 
     if (!file) {

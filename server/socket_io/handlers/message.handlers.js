@@ -25,7 +25,6 @@ export default function messageHandlers(io, socket) {
 
   socket.on('message:add', (message) => {
     Message.create(message).catch(onError)
-
     message.createdAt = Date.now()
 
     messages[roomId].push(message)

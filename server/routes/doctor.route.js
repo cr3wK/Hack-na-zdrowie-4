@@ -96,11 +96,15 @@ router.patch('/add_patient', async (
         if (!patient) return res.sendStatus(404);
         patient.doctors.addToSet(doctor._id);
         await patient.save();
+        //create a room
+        const roomId = `${doctor.id}_${patient.id}`;
+        console.log(roomId)
+
 
         doctor.patients.addToSet(patient._id);
         await doctor.save();
 
-        res.status(200).json({ok: true});
+        res.status(200).json({roomId: roomId});
     } catch (err) {
         next(err);
     }
@@ -127,6 +131,29 @@ router.patch('/description_change_patient', async (
         await patient.save();
 
         res.status(200).json({ok: true});
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get(['/:doctorId', '/'], async (req, res, next) => {
+    try {
+        const doctorId = req.params.doctorId || req.query.doctorId;
+
+        if (!doctorId) {
+            return res.status(400).json({ error: 'doctorId is required' });
+        }
+
+        const doctor = await Doctor
+            .findById(doctorId)
+            .select('-passwordHash -patients')
+            .lean(); //double-cup
+
+        if (!doctor) {
+            return res.status(404).json({ error: 'Doctor not found' });
+        }
+
+        res.json(doctor);
     } catch (err) {
         next(err);
     }

@@ -18,7 +18,7 @@ export const FirstPage = () => {
                         <p className="subtitle">Łatwy dostęp do informacji i możliwość rozmowy z lekarzem lub
                             opiekunem.</p>
 
-                        <button onClick={() => navigate('/login')}> className="btn-main">Konto pacjenta</button>
+                        <button className="btn-main" onClick={() => navigate('/login')}>Konto pacjenta</button>
                         <p className="hint">(Kliknij tutaj, aby rozpocząć)</p>
 
                         <div className="info-box">

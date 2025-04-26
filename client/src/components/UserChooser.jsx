@@ -10,11 +10,10 @@ export const UserChooser = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Загрузка пользователей из API
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('/api/users');
-                setUsers(response.data); // Установка данных пользователей
+                setUsers(response.data);
                 setLoading(false);
             } catch (err) {
                 console.error('Ошибка при загрузке пользователей:', err);
@@ -34,14 +33,12 @@ export const UserChooser = () => {
         const selectedUser = users.find((user) => user._id === selectedUserId);
 
         if (selectedUser) {
-            // Сохранение данных пользователя в localStorage
             storage.set(USER_KEY, {
-                userId: selectedUser._id,
-                userName: selectedUser.userName,
-                roomId: selectedUser.roomId || 'main_room',
+                id: selectedUser._id,
+                name: selectedUser.name,
+                roomId: selectedUser.roomIds?.[0] || 'main_room',
             });
 
-            // Перезагрузка для применения изменений
             window.location.reload();
         }
     };
@@ -56,7 +53,7 @@ export const UserChooser = () => {
                 <option value="">Выберите...</option>
                 {users.map((user) => (
                     <option key={user._id} value={user._id}>
-                        {user.userName}
+                        {user.name} {user.surname}
                     </option>
                 ))}
             </select>

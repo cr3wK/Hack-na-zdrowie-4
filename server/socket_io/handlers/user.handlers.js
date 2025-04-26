@@ -14,8 +14,8 @@ export default function userHandlers(io, socket) {
   socket.on('user:add', async (user) => {
     socket.to(roomId).emit('log', `User ${userName} connected`)
 
-    user.socketId = socket.id
-
+    console.log(user);
+    user.socketId = socket.id;
     users[roomId].push(user)
 
     updateUserList()

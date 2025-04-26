@@ -15,7 +15,7 @@ export default function userHandlers(io, socket) {
     socket.to(roomId).emit('log', `User ${userName} connected`)
 
     user.socketId = socket.id
-
+    console.log("cyka")
     users[roomId].push(user)
 
     updateUserList()

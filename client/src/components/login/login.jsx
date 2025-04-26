@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import './login.css';
 import { handleLogin } from './auth';
+import { useNavigate } from 'react-router-dom';
+import storage from 'utils/storage'
+import { USER_KEY } from 'constants'
 
 export const Login = () => {
     const [userMail, setUserMail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const hanLogin = async () => {
         const data = await handleLogin(userMail, password);
         if (data === null) {
             alert('Response is not ok');
         } else {
-            alert('Response ok');
+            storage.set(USER_KEY, data);
+            navigate('/room')
         }
     };
 

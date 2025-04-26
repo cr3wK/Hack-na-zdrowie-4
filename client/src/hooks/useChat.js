@@ -14,7 +14,7 @@ export default function useChat() {
       io(SERVER_URI, {
         query: {
           roomId: user.roomId,
-          userName: user.userName
+          userName: user.name
         }
       })
   )

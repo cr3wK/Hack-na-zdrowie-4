@@ -18,7 +18,17 @@
     top: -4px;
     left: -4px;
     background: $primary;
-    border-radius: 50%;
+    border-radius: 50%; /* Закругление для кнопки .close */
+    width: 20px;
+    height: 20px;
+  }
+
+  &.chat {
+    margin-top: 1rem;
+    padding: 0.25rem 0.5rem;
+    width: max-content;
+    color: $light;
+    background-color: $primary;
   }
 }
 

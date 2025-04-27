@@ -16,6 +16,7 @@ export default function userHandlers(io, socket) {
 
     console.log(user);
     user.socketId = socket.id;
+    user.userName = userName;
     users[roomId].push(user)
 
     updateUserList()

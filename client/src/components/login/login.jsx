@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import './login.css';
 import { handleLogin } from './auth';
 import { useNavigate } from 'react-router-dom';
 import storage from 'utils/storage'
 import { USER_KEY } from 'constants'
-
+import "./login.css"
 export const Login = () => {
     const [userMail, setUserMail] = useState('');
     const [password, setPassword] = useState('');

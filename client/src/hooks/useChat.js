@@ -4,7 +4,8 @@ import { io } from 'socket.io-client'
 import storage from 'utils/storage'
 
 export default function useChat() {
-  const user = storage.get(USER_KEY)
+  // Получаем пользователя из локального хранилища
+  const [user, setUser] = useState(storage.get(USER_KEY) || {})
   const [users, setUsers] = useState([])
   const [messages, setMessages] = useState([])
   const [log, setLog] = useState(null)
@@ -13,14 +14,45 @@ export default function useChat() {
   const { current: socket } = useRef(
       io(SERVER_URI, {
         query: {
-          roomId: user.roomId,
-          userName: user.name
+          roomId: user?.roomId,
+          userName: user?.name
         }
       })
   )
 
+  // Получение специализации пользователя из API
+  const fetchUserSpecialization = async () => {
+    try {
+      const response = await fetch(`${SERVER_URI}/doctors/me`, {
+        method: 'GET',
+        credentials: 'include', // Делаем запрос с cookies
+      })
+
+      if (!response.ok) {
+        console.error('Невозможно получить данные пользователя')
+        return
+      }
+
+      const data = await response.json()
+
+      // Обновляем данные пользователя (включая specialization)
+      const updatedUser = {
+        ...user,
+        specialization: data.specialization // Добавляем специализацию
+      }
+
+      setUser(updatedUser)
+      storage.set(USER_KEY, updatedUser) // Сохраняем данные в локальном хранилище
+    } catch (error) {
+      console.error('Ошибка при получении данных пользователя:', error)
+    }
+  }
+
   useEffect(() => {
-    console.log(socket);
+    // Загрузка специализации и инициализация сокета
+    fetchUserSpecialization()
+
+    console.log(socket)
     socket.emit('user:add', user)
     socket.emit('message:get')
     socket.emit('room_list:get')
@@ -30,7 +62,9 @@ export default function useChat() {
     socket.on('message_list:update', setMessages)
     socket.on('room_list:update', setRooms)
     socket.on('room:joined', (roomName) => {
-      storage.set(USER_KEY, { ...user, roomId: roomName })
+      const updatedUser = { ...user, roomId: roomName }
+      storage.set(USER_KEY, updatedUser)
+      setUser(updatedUser) // Обновляем состояние пользователя
       window.location.reload()
     })
 
@@ -50,6 +84,7 @@ export default function useChat() {
   const joinRoom = (roomName) => socket.emit('room:join', roomName)
 
   return {
+    user, // Возвращаем объект user с новой информацией (включая specialization)
     users,
     messages,
     log,

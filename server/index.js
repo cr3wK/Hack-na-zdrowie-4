@@ -1,67 +1,78 @@
-import cors from 'cors'
-import express from 'express'
-import { createServer } from 'http'
-import mongoose from 'mongoose'
-import { Server } from 'socket.io'
-import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js'
-import onConnection from './socket_io/onConnection.js'
-import { getFilePath } from './utils/file.js'
-import onError from './utils/onError.js'
-import upload from './utils/upload.js'
-import cookieParser from 'cookie-parser'
-import doctorRoutes from './routes/doctor.route.js'
-import patientRoutes from './routes/patient.route.js'
-const app = express()
+import cors from 'cors';
+import express from 'express';
+import { createServer } from 'http';
+import mongoose from 'mongoose';
+import { Server } from 'socket.io';
+import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js';
+import onConnection from './socket_io/onConnection.js';
+import { getFilePath } from './utils/file.js';
+import onError from './utils/onError.js';
+import upload from './utils/upload.js';
+import cookieParser from 'cookie-parser';
+import doctorRoutes from './routes/doctor.route.js';
+import patientRoutes from './routes/patient.route.js';
 
+const app = express();
+
+// CORS с передачей cookies
 app.use(
-  cors({
-    origin: ALLOWED_ORIGIN
-  })
-)
-app.use(express.json())
+    cors({
+      origin: ALLOWED_ORIGIN,
+      credentials: true // Разрешаем передачу cookies
+    })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+// Ваши маршруты
+app.use('/doctor', doctorRoutes);
+app.use('/patient', patientRoutes);
 
 app.use('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) return res.sendStatus(400)
+  if (!req.file) return res.sendStatus(400);
 
   const relativeFilePath = req.file.path
-    .replace(/\\/g, '/')
-    .split('server/files')[1]
+      .replace(/\\/g, '/')
+      .split('server/files')[1];
 
-  res.status(201).json(relativeFilePath)
-})
+  res.status(201).json(relativeFilePath);
+});
 
 app.use('/files', (req, res) => {
-  const filePath = getFilePath(req.url)
+  const filePath = getFilePath(req.url);
+  res.status(200).sendFile(filePath);
+});
 
-  res.status(200).sendFile(filePath)
-})
-app.use(cookieParser())
-app.use(onError)
-app.use('/doctor',doctorRoutes)
-app.use('/patient',patientRoutes)
+app.use(onError);
 
 try {
   await mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-  })
-  console.log('🚀 Connected')
+  });
+  console.log('🚀 Connected');
 } catch (e) {
-  onError(e)
+  onError(e);
 }
 
-const server = createServer(app)
+const server = createServer(app);
 
 const io = new Server(server, {
-  cors: ALLOWED_ORIGIN,
+  cors: {
+    origin: ALLOWED_ORIGIN,
+    credentials: true // Разрешаем cookies для socket.io
+  },
   serveClient: false
-})
+});
 
 io.on('connection', (socket) => {
-  onConnection(io, socket)
-})
+  onConnection(io, socket);
+});
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
-  console.log(`🚀 Server started on port ${PORT}`)
-})
+  console.log(`🚀 Server started on port ${PORT}`);
+});
+
+export default app;

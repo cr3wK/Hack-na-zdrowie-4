@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZswODiH - Zintegrowany System Wspierający Opiekę Długoterminową i Hospicyjną</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@400;700&family=Jost:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/messenger.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="../assets/icons/MAIN_LOGO.svg" alt="Main Logo" />
+      <span class="logo-zsw">Zsw</span><span class="logo-odih">ODiH</span>
+    </div>
+    <nav class="top-nav">
+      <button class="btn top-btn a-btn">A</button>
+      <button class="btn top-btn">Kalendarz</button>
+      <button class="btn top-btn notifications">
+        <img src="../assets/icons/bell_icon.svg" alt="Powiadomienia" width="20" height="20" />
+        <span class="notif-badge">99+</span>
+      </button>
+      <button class="btn top-btn konto">Konto</button>
+    </nav>
+  </header>
+  <!-- Nagłówek aplikacji -->
+  <!-- Główna część aplikacji: trzy panele -->
+  <!-- Pasek наwigacji aplikacji -->
+  <!-- Pasek наwigacji aplikacji z logo po lewej -->
+  <!-- Pasek наwigacji z logo po lewej i przyciskami w jednej linii -->
+  <!-- Pasek наwigacji: logo po lewej, przyciski po prawej -->
+  <div class="main-layout" style="flex:1; min-height:0;">
+    <!-- Panel pacjentów -->
+    <aside class="patients-panel">
+
+      <!-- Pasek wyszukiwania pacjentów -->
+      <form class="search-bar" autocomplete="off">
+        <div class="search-bar__container">
+          <input type="text" class="search-bar__input" placeholder="Imię / Nazwisko / PESEL" />
+          <button class="search-bar__icon" type="submit">
+            <img src="../assets/icons/search_icon.svg" alt="Szukaj" width="24" height="24" />
+          </button>
+        </div>
+      </form>
+        <!-- Lista pacjentów -->
+        <div class="patient-list">
+          <button class="patient-card" type="button">
+            <div class="patient-name">Jan Kowalski</div>
+            <div class="patient-pesel">90010112345 / 01.01.1990</div>
+          </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Anna Nowak</div>
+          <div class="patient-pesel">85050567890 / 05.05.1985</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Piotr Zieliński</div>
+          <div class="patient-pesel">92030345678 / 03.03.1992</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Michał Lewandowski</div>
+          <div class="patient-pesel">91020211223 / 02.02.1991</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Katarzyna Wójcik</div>
+          <div class="patient-pesel">93040433445 / 04.04.1993</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Tomasz Mazur</div>
+          <div class="patient-pesel">87070799887 / 07.07.1987</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Agnieszka Krawczyk</div>
+          <div class="patient-pesel">95050511122 / 05.05.1995</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Marcin Dąbrowski</div>
+          <div class="patient-pesel">88080844455 / 08.08.1988</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Ewa Zielińska</div>
+          <div class="patient-pesel">86060622233 / 06.06.1986</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Paweł Wiśniewski</div>
+          <div class="patient-pesel">94090955566 / 09.09.1994</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Karol Jabłoński</div>
+          <div class="patient-pesel">97010133344 / 01.01.1997</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Natalia Szymańska</div>
+          <div class="patient-pesel">99020277788 / 02.02.1999</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Grzegorz Lis</div>
+          <div class="patient-pesel">88030322211 / 03.03.1988</div>
+        </button>
+        <button class="patient-card" type="button">
+          <div class="patient-name">Alicja Wróbel</div>
+          <div class="patient-pesel">93040455566 / 04.04.1993</div>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Panel czatu -->
+    <main class="chat-panel">
+      <!-- Pasek okrągłych ikon nad czatem -->
+      <div class="chat-bar-icons">
+  <button class="chat-bar-icon" aria-label="Skala Barthela">
+    <img src="../assets/icons/list_of_patients_icon.svg" alt="Skala Barthela" width="28" height="28" />
+    <span class="chat-bar-tooltip">Skala Barthela</span>
+  </button>
+  <button class="chat-bar-icon" aria-label="Zadzwonić">
+    <img src="../assets/icons/call_icon.svg" alt="Zadzwonić" width="28" height="28" />
+    <span class="chat-bar-tooltip">Zadzwonić</span>
+  </button>
+  <button class="chat-bar-icon" aria-label="Leki">
+    <img src="../assets/icons/medicine_icon.svg" alt="Leki" width="28" height="28" />
+    <span class="chat-bar-tooltip">Leki</span>
+  </button>
+</div>
+      <!-- Wiadomości -->
+      <div class="chat-messages">
+
+        <div class="message">
+          OK
+        </div>
+        <div class="message-time">09:00</div>
+        <div class="message">
+          Can you send me the document?
+        </div>
+        <div class="message-time">09:01</div>
+        <div class="message me">
+          Sure, give me a second.
+        </div>
+        <div class="message-time me">09:02</div>
+        <div class="message">
+          Thank you!
+        </div>
+        <div class="message-time">09:03</div>
+        <div class="message me">
+          Here it is: <a href="#">report.pdf</a>
+        </div>
+        <div class="message-time me">09:04</div>
+        <div class="message">
+          This is a very long test message that should almost reach the maximum width of the message bubble, to demonstrate how the max-width limit works. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dictum, sapien nec hendrerit dictum, lectus ex porta ex, nec suscipit nisi erat ac enim.
+        </div>
+        <div class="message-time">09:05</div>
+        <div class="message me">
+          This is a very long test message from me, just to check the maximum width and bubble behavior when the content is overflowing. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dictum, sapien nec hendrerit dictum, lectus ex porta ex, nec suscipit nisi erat ac enim.
+        </div>
+        <div class="message-time me">09:06</div>
+        <div class="message">
+          Ok.
+        </div>
+        <div class="message-time">09:07</div>
+        <div class="message me">
+          👍
+        </div>
+        <div class="message-time me">09:08</div>
+        <div class="message">
+          See you tomorrow!
+        </div>
+        <div class="message-time">09:09</div>
+        <div class="message me">
+          See you!
+        </div>
+        <div class="message-time me">09:10</div>
+      </div>
+        <div class="chat-messages-border"></div>
+      <!-- Pasek wysyłania wiadomości -->
+      <form class="chatbar">
+  <button class="chatbar-more" type="button" aria-label="Więcej opcji">
+    <img src="../assets/icons/more_message_icon.svg" alt="Więcej opcji" width="22" height="22" />
+  </button>
+  <input class="chatbar-input" placeholder="Napisz wiadomość" />
+  <button class="chatbar-mic" type="button" aria-label="Nagraj wiadomość">
+    <img src="../assets/icons/voice_message_icon.svg" alt="Nagraj wiadomość" width="22" height="22" />
+  </button>
+  <button class="chatbar-send" aria-label="Wyślij">
+    <img src="../assets/icons/send_icon.svg" alt="Wyślij" width="22" height="22" />
+  </button>
+</form>
+    </main>
+
+    <!-- Panel informacji o pacjencie -->
+    <aside class="info-panel">
+  <!-- Awatar pacjenta wyśrodkowany, ze statusem -->
+  <div class="patient-avatar">
+    <img src="../assets/icons/acc_icon.svg" alt="Avatar" />
+    <span class="avatar-status"><span class="avatar-tooltip">Online</span></span>
+  </div>
+      <div class="patient-info-header"> 
+        <div class="patient-fullname">IMIĘ NAZWISKO</div>
+        <div class="patient-pesel">Pesel/data urodzenia</div>
+      </div>
+      <div class="patient-contact">
+  <div class="patient-address"><span>Adres:</span> <span id="patient-address">-</span></div>
+  <div class="patient-phone"><span>Telefon:</span> <span id="patient-phone">-</span></div>
+</div>
+      <div class="info-section">
+        <div class="info-section-title">Informacja o pacjencie</div>
+        <div class="info-textarea-wrapper">
+  <textarea class="info-textarea" placeholder="Dodaj informację o pacjencie..."></textarea>
+  <button class="info-save-btn" type="button">Zapisz</button>
+</div>
+      </div>
+      <div class="info-section">
+        <div class="info-section-title">Notatki</div>
+        <div class="info-textarea-wrapper">
+  <textarea class="info-textarea" placeholder="Dodaj notatki..."></textarea>
+  <button class="info-save-btn" type="button">Zapisz</button>
+</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Stopka aplikacji -->
+
+
+  <!-- Stopka z AI pomocnikiem na samym dole strony -->
+  <footer class="footer">
+    <span>AI pomocnik</span>
+  </footer>
+</body>
+</html>

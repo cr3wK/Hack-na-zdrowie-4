@@ -1,0 +1,77 @@
+/* Konto pacjenta */
+.KontoLogButton {
+  cursor: pointer;
+  transition: background 0.3s ease;
+  background-color: #FF4B00; /* Начальный цвет */
+}
+
+.KontoLogButton:hover {
+  background: #FF6A00; /* Цвет при наведении */
+}
+
+.KontoLogButton:hover svg path {
+  fill: #FFFFFF; /* Цвет заливки при наведении */
+}
+  
+  /* WITAMY W */
+  .heading-main {
+    color: #001F6A;
+    font-size: 130px;
+    font-family: 'ITC Franklin Gothic LT Heavy';
+    font-weight: 500;
+    line-height: 143.19px;
+    letter-spacing: 1.30px;
+    word-wrap: break-word;
+  }
+  
+  /* ZswODiH */
+  .heading-sub {
+    color: #001F6A;
+    font-size: 140px;
+    font-family: Jost;
+    font-weight: 700;
+    line-height: 164.89px;
+    letter-spacing: 1.40px;
+    word-wrap: break-word;
+  }
+  
+  /* Текст под заголовком */
+  .description {
+    color: #001F6A;
+    font-size: 32px;
+    font-family: Inria Sans;
+    font-weight: 400;
+    word-wrap: break-word;
+  }
+  
+  /* Подпись к кнопке */
+  .subtext {
+    color: #001F6A;
+    font-size: 20px;
+    font-family: Inria Sans;
+    font-weight: 400;
+    word-wrap: break-word;
+  }
+  
+  /* Убираем скролл и обнуляем отступы */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Обёртка, которая центрирует содержимое */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 20px;
+  position: relative; /* Обязательно! Чтобы в ней работали абсолютные элементы */
+  overflow: visible;  /* Позволяем SVG выходить за границы */
+}

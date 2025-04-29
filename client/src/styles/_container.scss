@@ -1,62 +1,172 @@
+@import "variables";
+
 .container {
   &.chat {
-    height: 98vh;
-    @include flex-center;
+    height: 100vh;
+    width: 150vh; // Чат на весь экран
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr; // Сетка: календарь, сообщения, пользователи
+    gap: 1rem;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+    background-color: $light;
   }
 
   &.message {
-    @include flex-center(true);
-    height: 100%;
-    width: 340px;
+    display: flex;
+    flex-direction: column; // Сообщения располагаются по вертикали
+    height: 100%; // Растянем контейнер на всю высоту
+    width: 100%; // Занимает доступную ширину
+    overflow-y: auto; // Добавляем скролл
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid $gray-light;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   }
 
   &.user {
-    padding: 0.5rem;
-    align-self: flex-start;
+    display: flex;
+    flex-direction: column; // Пользователи вертикально
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid $gray-light;
+    background-color: $white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; // Скролл при переполнении
   }
 
   &.emoji {
     .emoji-mart {
       position: absolute;
-      z-index: 2;
-      bottom: 30px;
+      z-index: 3;
+      bottom: 10px; // Эмодзи ближе к низу
       left: 50%;
       transform: translateX(-50%);
-
-      button {
-        background: none;
-      }
+      border-radius: 6px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .emoji-mart-bar {
-      display: none;
-    }
-  }
-
-  &.preview {
-    position: absolute;
-    z-index: 2;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    img,
-    audio,
-    video {
-      max-width: 200px;
+    button {
+      background: none;
     }
   }
 
   &.recorder {
     .overlay {
-      @include flex-center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: fixed;
-      z-index: 1;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.6); // Добавляем фокус при записи
+      z-index: 5;
     }
+  }
+}
+
+.btn {
+  @include flex-center;
+  padding: 0.1rem 0.5rem;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: lighten($primary, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.close {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    background: $primary;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+  }
+
+  &.chat {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: $primary;
+    color: $light;
+    border-radius: 20px;
+    width: auto;
+  }
+}
+
+.form {
+  display: flex; // Горизонтальное позиционирование
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 0.5rem;
+  border-top: 1px solid $gray-light;
+  background-color: $white;
+
+  input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid $primary;
+    border-radius: 4px;
+
+    &:focus {
+      outline: none;
+      border-color: lighten($primary, 10%);
+    }
+  }
+
+  .btn.chat {
+    flex-shrink: 0;
+    background-color: $primary;
+    color: $white;
+    border-radius: 50%;
+    padding: 0.5rem;
+
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
+  }
+}
+
+.list {
+  position: relative;
+  height: 90%;
+  width: 100%;
+
+  &.message {
+    overflow-y: scroll; // Скролл для сообщений
+    padding: 1rem;
+    justify-content: flex-start;
+
+    .log {
+      padding: 0.5rem;
+      position: fixed;
+      top: 1rem;
+      background-color: $dark;
+      color: $light;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &.user {
+    padding: 1rem;
+    list-style: none; // Отключаем стиль списков
   }
 }

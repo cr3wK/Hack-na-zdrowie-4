@@ -1,0 +1,83 @@
+/* login.css */
+
+/* Общие стили для страницы */
+body {
+    font-family: 'Montserrat', sans-serif; /* Чистый шрифт */
+    background: #f8f9fa; /* Светло-серый фон */
+    color: #333; /* Темный цвет текста */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Высота окна */
+    margin: 0;
+}
+
+/* Контейнер логина */
+.LoginContainer {
+    background: #ffffff; /* Белый фон */
+    border-radius: 8px; /* Округленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 2rem; /* Внутренние отступы */
+    width: 100%; /* Растяжение */
+    max-width: 400px; /* Максимальная ширина */
+    text-align: center; /* Центрирование текста */
+}
+
+/* Заголовок */
+.LoginContainer h1 {
+    font-size: 1.8rem; /* Размер заголовка */
+    color: #0056b3; /* Синий цвет */
+    margin-bottom: 1.5rem; /* Отступ снизу */
+}
+
+/* Инпуты */
+.LoginContainer input {
+    width: 100%; /* Растяжение по ширине */
+    padding: 0.8rem; /* Отступ */
+    border: 1px solid #ccc; /* Серый цвет границы */
+    border-radius: 4px; /* Округлые углы */
+    font-size: 1rem; /* Размер шрифта */
+    margin-bottom: 1rem; /* Отступ снизу */
+    background: #f7f7f7; /* Светло-серый фон */
+    color: #333; /* Текст темного цвета */
+    box-sizing: border-box; /* Учитывать внутренние отступы */
+}
+
+/* Подсветка инпута при фокусе */
+.LoginContainer input:focus {
+    outline: none; /* Убираем стандартный фокус */
+    border-color: #0056b3; /* Синий цвет */
+    box-shadow: 0 2px 8px rgba(0, 86, 179, 0.2); /* Синяя подсветка */
+}
+
+/* Кнопка логина */
+.LoginContainer button {
+    width: 100%; /* Растяжение по ширине */
+    padding: 0.8rem; /* Внутренние отступы */
+    background-color: #0056b3; /* Синий цвет кнопки */
+    color: #ffffff; /* Белый текст */
+    border: none; /* Без границы */
+    border-radius: 4px; /* Округлые углы */
+    font-size: 1rem; /* Размер текста */
+    font-weight: 600; /* Толстый шрифт */
+    cursor: pointer; /* Курсор в виде руки */
+    transition: background-color 0.3s ease; /* Гладкий переход */
+}
+
+/* Ховер кнопки (оранжевый цвет) */
+.LoginContainer button:hover {
+    background-color: #ff9800; /* Оранжевый цвет */
+}
+
+/* Клик по кнопке (темный оранжевый цвет) */
+.LoginContainer button:active {
+    background-color: #e67e00; /* Темно-оранжевый */
+}
+
+/* Ошибки */
+.Error {
+    color: #e74c3c; /* Красный для текста ошибок */
+    font-size: 0.9rem; /* Уменьшенный размер */
+    margin-bottom: 1rem; /* Отступ снизу */
+    text-align: center; /* Центрируем текст */
+}

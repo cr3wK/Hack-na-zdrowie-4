@@ -42,12 +42,21 @@ router.post('/login', async (req, res, next) => {
 
         res.cookie('accessToken', token, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             secure: process.env.NODE_ENV === 'production',
             maxAge: 15 * 60 * 1000
         });
 
-        res.json({ok: true, userId:doctor._id, name: doctor.name, surname: doctor.surname, roomId: doctor.roomIds[0]});
+        res.json({
+            ok: true,
+            userId: doctor._id,
+            name: doctor.name,
+            surname: doctor.surname,
+            roomId: doctor.roomIds[0],
+            specialization: doctor.specialization,
+            allRoomIds: doctor.roomIds,
+            allPatients: doctor.patients
+        });
     } catch (e) {
         next(e);
     }
@@ -57,7 +66,6 @@ router.post('/login', async (req, res, next) => {
 router.get('/me', async (req, res, next) => {
     const token = req.cookies?.accessToken;
     if (!token) return res.sendStatus(401);
-
     try {
         req.user = jwt.verify(token, JWT_SECRET);
     } catch {
@@ -127,7 +135,7 @@ router.patch('/description_change_patient', async (
     try {
         const patient = await Patient.findById(patientId);
         if (!patient) return res.sendStatus(404);
-        patient.illnessDescription  = description;
+        patient.illnessDescription = description;
         await patient.save();
 
         res.status(200).json({ok: true});
@@ -141,7 +149,7 @@ router.get(['/:doctorId', '/'], async (req, res, next) => {
         const doctorId = req.params.doctorId || req.query.doctorId;
 
         if (!doctorId) {
-            return res.status(400).json({ error: 'doctorId is required' });
+            return res.status(400).json({error: 'doctorId is required'});
         }
 
         const doctor = await Doctor
@@ -150,7 +158,7 @@ router.get(['/:doctorId', '/'], async (req, res, next) => {
             .lean(); //double-cup
 
         if (!doctor) {
-            return res.status(404).json({ error: 'Doctor not found' });
+            return res.status(404).json({error: 'Doctor not found'});
         }
 
         res.json(doctor);

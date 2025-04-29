@@ -27,5 +27,44 @@
   &.user {
     list-style: none;
     align-self: flex-start;
+    padding: 0; // Убираем отступы списка
+
+    .item.user {
+      display: flex; // Располагаем элементы по горизонтали
+      align-items: center; // Центрируем содержимое
+      gap: 0.5rem; // Пробел между элементами
+      padding: 0.5rem 0.75rem; // Внутренние отступы
+      border-radius: 4px; // Скругляем список пользователей
+      transition: background-color 0.3s ease; // Анимация при наведении
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($gray-light, 15%); // Подсветка при наведении
+      }
+
+      /* Точка состояния с динамическим цветом */
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%; // Делаем точку круглой
+        flex-shrink: 0; // Отключаем сжатие точки
+      }
+
+      /* Иконка (можно оставить в текущем формате) */
+      .icon.user {
+        color: $gray-light;
+        font-size: 1.2rem;
+      }
+
+      /* Цветной ник (пользовательское имя) */
+      .user-link {
+        font-size: 0.95rem;
+        font-weight: bold;
+        flex-grow: 1; // Расширяется до свободного пространства
+        user-select: none;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+    }
   }
 }

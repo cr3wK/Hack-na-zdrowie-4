@@ -1,104 +1,83 @@
-:root {
-    --brand-blue: #002873;
-    --cta-orange: #ff4d00;
-    --light-gray: #eeeeee;
-    --input-gray: #f2f2f2;
-    --max-width: 640px;
-    --font-main: "Inter", sans-serif;
-}
+/* login.css */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-main);
-}
-
-html,
+/* Общие стили для страницы */
 body {
-    height: 100%;
-    width: 100%;
+    font-family: 'Montserrat', sans-serif; /* Чистый шрифт */
+    background: #f8f9fa; /* Светло-серый фон */
+    color: #333; /* Темный цвет текста */
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: var(--light-gray);
+    align-items: center;
+    min-height: 100vh; /* Высота окна */
+    margin: 0;
 }
 
-.container-login {
-    width: 100%;
-    max-width: var(--max-width);
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Контейнер логина */
+.LoginContainer {
+    background: #ffffff; /* Белый фон */
+    border-radius: 8px; /* Округленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 2rem; /* Внутренние отступы */
+    width: 100%; /* Растяжение */
+    max-width: 400px; /* Максимальная ширина */
+    text-align: center; /* Центрирование текста */
 }
 
-h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--brand-blue);
-    margin-bottom: 0.5rem;
+/* Заголовок */
+.LoginContainer h1 {
+    font-size: 1.8rem; /* Размер заголовка */
+    color: #0056b3; /* Синий цвет */
+    margin-bottom: 1.5rem; /* Отступ снизу */
 }
 
-.subtitle {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 2rem;
+/* Инпуты */
+.LoginContainer input {
+    width: 100%; /* Растяжение по ширине */
+    padding: 0.8rem; /* Отступ */
+    border: 1px solid #ccc; /* Серый цвет границы */
+    border-radius: 4px; /* Округлые углы */
+    font-size: 1rem; /* Размер шрифта */
+    margin-bottom: 1rem; /* Отступ снизу */
+    background: #f7f7f7; /* Светло-серый фон */
+    color: #333; /* Текст темного цвета */
+    box-sizing: border-box; /* Учитывать внутренние отступы */
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+/* Подсветка инпута при фокусе */
+.LoginContainer input:focus {
+    outline: none; /* Убираем стандартный фокус */
+    border-color: #0056b3; /* Синий цвет */
+    box-shadow: 0 2px 8px rgba(0, 86, 179, 0.2); /* Синяя подсветка */
 }
 
-.input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: var(--input-gray);
-    color: #333;
-    outline: none;
-    transition: border 0.2s ease;
+/* Кнопка логина */
+.LoginContainer button {
+    width: 100%; /* Растяжение по ширине */
+    padding: 0.8rem; /* Внутренние отступы */
+    background-color: #0056b3; /* Синий цвет кнопки */
+    color: #ffffff; /* Белый текст */
+    border: none; /* Без границы */
+    border-radius: 4px; /* Округлые углы */
+    font-size: 1rem; /* Размер текста */
+    font-weight: 600; /* Толстый шрифт */
+    cursor: pointer; /* Курсор в виде руки */
+    transition: background-color 0.3s ease; /* Гладкий переход */
 }
 
-.input:focus {
-    border: 1px solid var(--brand-blue);
+/* Ховер кнопки (оранжевый цвет) */
+.LoginContainer button:hover {
+    background-color: #ff9800; /* Оранжевый цвет */
 }
 
-.btn-login {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 8px;
-    background: var(--cta-orange);
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
+/* Клик по кнопке (темный оранжевый цвет) */
+.LoginContainer button:active {
+    background-color: #e67e00; /* Темно-оранжевый */
 }
 
-.btn-login:hover {
-    background: #cc3b00;
-}
-
-.link {
-    font-size: 0.9rem;
-    color: var(--brand-blue);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.link:hover {
-    text-decoration: underline;
-}
-
-.footer {
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    color: #888;
+/* Ошибки */
+.Error {
+    color: #e74c3c; /* Красный для текста ошибок */
+    font-size: 0.9rem; /* Уменьшенный размер */
+    margin-bottom: 1rem; /* Отступ снизу */
+    text-align: center; /* Центрируем текст */
 }

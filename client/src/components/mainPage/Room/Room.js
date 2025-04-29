@@ -14,6 +14,7 @@ export const Room = () => {
         setSelectedUser({
             userId: user.userId || user.id,
             userName: user.userName || user.name || 'Guest',
+            specialization: user.specialization
         });
     };
 

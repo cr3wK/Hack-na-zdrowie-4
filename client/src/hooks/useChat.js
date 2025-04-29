@@ -23,7 +23,7 @@ export default function useChat() {
   // Получение специализации пользователя из API
   const fetchUserSpecialization = async () => {
     try {
-      const response = await fetch(`${SERVER_URI}/doctors/me`, {
+      const response = await fetch(`${SERVER_URI}/doctor/me`, {
         method: 'GET',
         credentials: 'include', // Делаем запрос с cookies
       })

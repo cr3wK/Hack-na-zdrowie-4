@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import storage from '../../../utils/storage'
+import {USER_KEY} from "../../../constants";
 import useChat from 'hooks/useChat';
 import MessageInput from './MessageInput/MessageInput';
 import MessageList from './MessageList/MessageList';
 import UserList from './UserList/UserList';
+import {UserChooser} from '../../UserChooser';
 import { MainPage } from 'components/mainPage/MainPage';
 import { CalendarComponent } from 'components/calendar/CalendarComponent';
+import {useNavigate, useParams} from "react-router-dom";
 
 export const Room = () => {
-    const { users, messages, log, sendMessage, removeMessage } = useChat(); // Убрали user
+    const { roomId } = useParams();
+    const { users, messages, log, sendMessage, removeMessage } = useChat(roomId); // Убрали user
     const [selectedUser, setSelectedUser] = useState(null);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (roomId) {
+            navigate(`/room/${roomId}`);
+        }
+    }, [roomId]);
 
     const handleUserClick = (user) => {
         setSelectedUser({
@@ -18,15 +29,15 @@ export const Room = () => {
     };
 
     const closeUserPanel = () => setSelectedUser(null);
-
+    const user = storage.get(USER_KEY);
     return (
         <div className="container chat">
             {/* Календарь */}
             <CalendarComponent />
-
+            <UserChooser />
             {/* Сообщения */}
             <div className="container message">
-                <MessageList log={log} messages={messages} removeMessage={removeMessage} />
+                <MessageList log={log} messages={messages} removeMessage={removeMessage}/>
                 <MessageInput sendMessage={sendMessage} />
             </div>
 

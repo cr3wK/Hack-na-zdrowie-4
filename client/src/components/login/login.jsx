@@ -14,7 +14,9 @@ export const Login = () => {
             alert('Response is not ok');
         } else {
             storage.set(USER_KEY, data);
-            navigate('/room')
+            console.log(data);
+            data.roomId = data.roomIds[0]
+            navigate(`/room/${data.roomId}`);
         }
     };
 

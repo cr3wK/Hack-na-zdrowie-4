@@ -1,65 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import storage from 'utils/storage';
 import { USER_KEY } from 'constants';
+import { useNavigate } from 'react-router-dom';
 
 export const UserChooser = () => {
-    const [users, setUsers] = useState([]);
-    const [selectedUserId, setSelectedUserId] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const user = storage.get(USER_KEY);
+    const navigate = useNavigate();
+    console.log(user);
+    if (!user) {
+        return <h1>Blyat</h1>;
+    }
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await axios.get('/api/users');
-                setUsers(response.data);
-                setLoading(false);
-            } catch (err) {
-                console.error('Ошибка при загрузке пользователей:', err);
-                setError('Не удалось загрузить список пользователей');
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, []);
-
-    const handleSelection = (e) => {
-        setSelectedUserId(e.target.value);
+    const handleRoomSelect = (roomId) => {
+        console.log(`room: ${roomId}`);
+        user.roomId = roomId;
+        storage.set(USER_KEY, user);
+        navigate(`/room/${roomId}`);
     };
-
-    const handleLogin = () => {
-        const selectedUser = users.find((user) => user._id === selectedUserId);
-
-        if (selectedUser) {
-            storage.set(USER_KEY, {
-                id: selectedUser._id,
-                name: selectedUser.name,
-                roomId: selectedUser.roomIds?.[0] || 'main_room',
-            });
-
-            window.location.reload();
-        }
-    };
-
-    if (loading) return <p>Загрузка...</p>;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
     return (
         <div>
-            <h3>Выберите пользователя</h3>
-            <select value={selectedUserId} onChange={handleSelection}>
-                <option value="">Выберите...</option>
-                {users.map((user) => (
-                    <option key={user._id} value={user._id}>
-                        {user.name} {user.surname}
-                    </option>
-                ))}
-            </select>
-            <button onClick={handleLogin} disabled={!selectedUserId}>
-                Войти
-            </button>
+            <h2>Выберите комнату:</h2>
+            {user.roomIds && user.roomIds.length > 0 ? (
+                user.roomIds.map((roomId) => (
+                    <p key={roomId}>
+                        <button onClick={() => handleRoomSelect(roomId)}>
+                            {user.name} — Комната {roomId}
+                        </button>
+                    </p>
+                ))
+            ) : (
+                <p>У вас нет комнат.</p>
+            )}
         </div>
     );
 };

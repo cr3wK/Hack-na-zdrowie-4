@@ -47,7 +47,7 @@ router.post('/login', async (req, res, next) => {
             maxAge: 15 * 60 * 1000
         });
 
-        res.json({ok: true, userId:doctor._id, name: doctor.name, surname: doctor.surname, roomId: doctor.roomIds[0]});
+        res.json({ok: true, userId:doctor._id, name: doctor.name, surname: doctor.surname, roomId: doctor.roomIds[0], roomIds: doctor.roomIds});
     } catch (e) {
         next(e);
     }

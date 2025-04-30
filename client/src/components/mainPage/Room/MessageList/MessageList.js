@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import MessageItem from './MessageItem'
 
-export default function MessageList({ log, messages, removeMessage }) {
+export default function MessageList({ log, messages, removeMessage}) {
   const logRef = useRef()
   const bottomRef = useRef()
 

@@ -1,12 +1,20 @@
-import { NameInput, Room } from 'components'
-import { USER_KEY } from 'constants'
+import { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import storage from 'utils/storage'
-import { useNavigate } from 'react-router-dom'
+import { USER_KEY } from 'constants'
+import { Room } from 'components'
+
 export const Home = () => {
-  const user = storage.get(USER_KEY)
+  // const { roomId } = useParams()
+
   const navigate = useNavigate()
-  if (!user) {
-    navigate("/login")
-  }
-  return <Room />
+
+  useEffect(() => {
+    const user = storage.get(USER_KEY)
+    if (!user) {
+      navigate('/login')
+    }
+  }, [navigate])
+  const valid_user = storage.get(USER_KEY)
+  return <Room roomId={valid_user.roomId} />
 }

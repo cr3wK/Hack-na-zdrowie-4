@@ -31,7 +31,7 @@ router.get('/me', async (req, res, next) => {
 
 router.post("/register", async (req, res, next) => {
     try {
-        const { email, name, surname, pesel, password } = req.body;
+        const { email, name, surname, pesel, phoneNumber, password } = req.body;
         const hash = await bcrypt.hash(password, 12);
 
         const user = await Patient.create({
@@ -39,6 +39,8 @@ router.post("/register", async (req, res, next) => {
             name: name,
             surname: surname,
             pesel: pesel,
+            phoneNumber: phoneNumber,
+            bartelScale: Math.floor(Math.random() * 100) + 1,
             passwordHash: hash });
         res.status(201).json({ ok: true });
     } catch (e) { next(e); }

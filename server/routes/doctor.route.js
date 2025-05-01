@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'super-secret';
 
 router.post("/register", async (req, res, next) => {
     try {
-        const {email, name, surname, specialization, password} = req.body;
+        const {email, name, surname, specialization, phoneNumber, password} = req.body;
         const hash = await bcrypt.hash(password, 12);
 
         const doctor = await Doctor.create({
@@ -17,6 +17,7 @@ router.post("/register", async (req, res, next) => {
             name: name,
             surname: surname,
             specialization: specialization,
+            phoneNumber: phoneNumber,
             passwordHash: hash
         });
         res.status(201).json({ok: true});
@@ -136,6 +137,31 @@ router.patch('/description_change_patient', async (
         const patient = await Patient.findById(patientId);
         if (!patient) return res.sendStatus(404);
         patient.illnessDescription = description;
+        await patient.save();
+
+        res.status(200).json({ok: true});
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.patch('/drugs_change_patient', async (
+    req,
+    res,
+    next) => {
+    const {patientId, drugs} = req.body;
+    const token = req.cookies?.accessToken;
+    if (!token) return res.sendStatus(401);
+
+    try {
+        req.user = jwt.verify(token, JWT_SECRET);
+    } catch {
+        return res.sendStatus(401);
+    }
+    try {
+        const patient = await Patient.findById(patientId);
+        if (!patient) return res.sendStatus(404);
+        patient.drugs = drugs;
         await patient.save();
 
         res.status(200).json({ok: true});

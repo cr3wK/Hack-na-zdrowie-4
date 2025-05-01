@@ -16,6 +16,11 @@ const patientSchema = new Schema({
         type: String,
         required: true
     },
+    phoneNumber:{
+        type: String,
+        required: true,
+        unique: true
+    },
     pesel:{
         type: String,
         unique: true,
@@ -35,6 +40,10 @@ const patientSchema = new Schema({
         required: false
     }],
     roomIds:[{
+        type: String,
+        required: false
+    }],
+    drugs:[{
         type: String,
         required: false
     }],

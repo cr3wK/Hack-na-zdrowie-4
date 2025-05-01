@@ -11,6 +11,7 @@ import upload from './utils/upload.js';
 import cookieParser from 'cookie-parser';
 import doctorRoutes from './routes/doctor.route.js';
 import patientRoutes from './routes/patient.route.js';
+import roomRoutes from './routes/room.route.js';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(cookieParser());
 // Ваши маршруты
 app.use('/doctor', doctorRoutes);
 app.use('/patient', patientRoutes);
+app.use('/room', roomRoutes);
 
 app.use('/upload', upload.single('file'), (req, res) => {
   if (!req.file) return res.sendStatus(400);

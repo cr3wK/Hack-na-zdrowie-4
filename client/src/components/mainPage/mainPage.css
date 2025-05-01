@@ -1,5 +1,3 @@
-/* mainPage.css */
-
 /* Затемнение фона (Оверлей) */
 .main-page-overlay {
     position: fixed;
@@ -7,66 +5,163 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
-    z-index: 1000; /* Выводим поверх всего */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    z-index: 1000;
     display: flex;
-    justify-content: flex-end; /* Окно будет смещено вправо */
+    justify-content: flex-end;
 }
 
-/* Окно, размещенное справа */
+/* Основное окно */
 .main-page {
     position: relative;
-    background-color: #ffffff; /* Белый фон окна */
-    border-radius: 10px 0 0 10px; /* Скругленные углы слева */
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); /* Тень слева */
-    width: 400px; /* Фиксированная ширина */
-    max-width: 80%; /* Ограничиваем ширину, если экран маленький */
-    height: 100vh; /* Высота на весь экран */
+    background-color: #ffffff;
+    border-radius: 10px 0 0 10px; /* Скругление углов */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); /* Тень */
+    width: 400px;
+    max-width: 80%;
+    height: 100vh; /* Высота всего экрана */
     padding: 20px 30px;
-    text-align: left; /* Выравнивание текста */
-    animation: slide-in 0.3s ease-out; /* Анимация появления */
+    text-align: left;
+    animation: slide-in 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Добавляем прокрутку для длинного содержимого */
 }
 
-/* Анимация появления окна справа */
+/* Анимация появления окна */
 @keyframes slide-in {
     from {
-        transform: translateX(100%); /* Начинаем за границей экрана */
+        transform: translateX(100%);
         opacity: 0;
     }
     to {
-        transform: translateX(0); /* Полностью видно */
+        transform: translateX(0);
         opacity: 1;
     }
 }
 
-/* Общие стили для текста */
+/* Заголовок */
 .main-page-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 15px;
     color: #007bff;
     font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
+/* Описание */
 .main-page-description {
     font-size: 1rem;
     color: #555;
     margin-bottom: 20px;
+    line-height: 1.5;
 }
 
-/* Кнопка Закрытия */
+/* Кнопка закрытия */
 .main-page-close-btn {
     position: absolute;
     top: 10px;
-    left: 10px; /* Переносим кнопку влево, так как окно справа */
+    left: 10px;
     background-color: transparent;
     border: none;
     color: #999;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: all 0.3s ease;
 }
 
 .main-page-close-btn:hover {
-    color: #000; /* При наведении кнопка становится темной */
+    color: #007bff;
+    transform: scale(1.2);
+}
+
+/* Общий стиль для секций */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+.section-content {
+    background-color: #f5f5f5; /* Светло-серый фон */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Список пациентов */
+.DoctorsPatients ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.DoctorsPatients li {
+    padding: 10px 15px;
+    background-color: #e7f3ff; /* Голубой фон */
+    border: 1px solid #bcdffb; /* Граница */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+/* Стиль шкалы Бартеля */
+.bartel-scale {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Пространство между элементами */
+}
+
+.bartel-scale-bar {
+    flex-grow: 1;
+    background-color: #e7f3ff;
+    border: 1px solid #bcdffb;
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bartel-scale-bar span {
+    display: block;
+    height: 100%;
+    background-color: #007bff; /* Синяя заливка */
+    width: 50%; /* Пример: 50%, заменяется динамически */
+}
+
+.bartel-scale-label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Заметки */
+.notes-section {
+    padding: 15px;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .main-page {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 0;
+    }
+
+    .main-page-title {
+        font-size: 1.5rem;
+    }
 }

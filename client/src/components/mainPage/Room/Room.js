@@ -47,7 +47,7 @@ export const Room = () => {
                     surname={selectedUser.surname} // Фамилия пациента/доктора
                     specialization={selectedUser.specialization} // Специализация: 'doctor' или 'patient'
                     patients={selectedUser.specialization === 'doctor' ? selectedUser.allPatients : []}
-                    number = {selectedUser.phoneNumber}// Список видят только доктора
+                    phoneNumber= {selectedUser.phoneNumber}// Список видят только доктора
                     onClose={closeUserPanel}
                 />
             )}

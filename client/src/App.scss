@@ -1,34 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 @import './styles/variables';
-@import 'styles/mixins';
-@import 'styles/container';
-@import 'styles/list';
-@import 'styles/item';
-@import 'styles/form';
-@import 'styles/btnicon';
-@import 'styles/modal';
+@import './styles/mixins';
+@import './styles/container';
+@import './styles/list';
+@import './styles/item';
+@import './styles/form';
+@import './styles/btnicon';
+@import './styles/modal';
 
 *,
 *::before,
 *::after {
-  @include reset('Montserrat', 1rem, $dark);
+  @include reset('Poppins', 1rem, $dark);
 }
 
 body {
   @include flex-center;
-  background-color: $light;
+  background-color: lighten($light, 7%); /* Базовый фон */
+  color: $dark; /* Основной цвет текста */
+  font-family: 'Poppins', sans-serif; /* Применяется новый шрифт */
+  line-height: 1.5; /* Приятное расстояние между строками текста */
+  margin: 0;
+  padding: 0;
+
+  /* Фоновый узор в стиле Telegram */
+  background-image: repeating-linear-gradient(
+                  45deg,
+                  rgba(0, 0, 0, 0.05),
+                  rgba(0, 0, 0, 0.05) 10px,
+                  transparent 10px,
+                  transparent 20px
+  );
 }
 
 h2 {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
+  margin: 0.75rem 0;
+  font-size: 1.6rem; /* Увеличен размер заголовка чуть сильнее */
+  font-weight: 600; /* Слегка усиленный акцент на заголовки */
   text-align: center;
+  letter-spacing: 0.5px; /* Добавлено лёгкое расстояние между буквами */
+  color: darken($primary, 10%); /* Заголовок чуть темнее основного цвета */
 }
 
 img,
 video {
-  border-radius: 4px;
+  border-radius: 8px; /* Более мягкие края для медиа */
+  max-width: 30%; /* Удержание размеров в рамках контейнера */
+  border: 1px solid lighten($primary, 80%); /* Акцентная граница */
 }
 
 audio {
@@ -37,6 +56,87 @@ audio {
   }
 }
 
+/* Модальное окно: базовый стиль */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Всегда выше фона */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 90%; /* Ограничиваем ширину на экранах */
+  max-width: 400px;
+  background: #fff; /* Белый фон */
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease;
+
+  &__header {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    color: darken($primary, 15%);
+  }
+
+  &__body {
+    font-size: 1rem;
+    font-weight: 400;
+    color: $dark;
+    letter-spacing: 0.2px;
+    text-align: center;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      color: #fff;
+      background-color: $primary;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary, 10%);
+      }
+    }
+
+    .btn-cancel {
+      background-color: lighten($primary, 40%);
+      color: darken($primary, 30%);
+
+      &:hover {
+        background-color: lighten($primary, 30%);
+      }
+    }
+  }
+}
+
+/* Фоновая затемнённая область для модального окна */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Тёмный фон */
+  z-index: 999; /* За модальным окном */
+  animation: fadeIn 0.3s ease;
+}
+
+/* Скрытые элементы для screen readers */
 .visually-hidden {
   position: absolute;
   z-index: -100;
@@ -53,15 +153,33 @@ audio {
   white-space: nowrap;
 }
 
+/* Анимация появления */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Улучшение для скроллбара */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 8px; /* Немного шире для удобства */
 }
 
 ::-webkit-scrollbar-track {
-  background-color: $light;
+  background-color: lighten($light, 10%); /* Более заметный трек скроллбара */
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $primary;
-  border-radius: 2px;
+  background-color: lighten($primary, 30%); /* Светлая версия акцентного цвета */
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: $primary; /* Яркий акцент при наведении */
+    transform: scale(1.1); /* Немного увеличивается */
+  }
 }

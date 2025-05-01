@@ -3,9 +3,9 @@ import PulseStatus from 'components/PulseStatus/PulseStatus'; // Path to PulseSt
 import Notes from 'components/Notes/Notes'; // Path to Notes component
 import './mainPage.css';
 
-export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
+export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
     const [bpm, setBpm] = useState(72); // Default bpm value, simulated as dynamic
-    const [patientNames, setPatientNames] = useState([]); // State for patient names
+    const [patientData, setPatientData] = useState([]); // State for patient data including names and bartelScale
 
     // Simulate pulse updates every 5 seconds
     useEffect(() => {
@@ -16,8 +16,8 @@ export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', sp
         return () => clearInterval(interval); // Cleanup on component unmount
     }, []);
 
-    // Fetch name for a specific patient ID
-    const fetchPatientName = async (patientId) => {
+    // Fetch details (name and bartelScale) for a specific patient ID
+    const fetchPatientDetails = async (patientId) => {
         try {
             const response = await fetch(`http://localhost:4000/patient/${patientId}`, {
                 method: 'GET',
@@ -25,14 +25,17 @@ export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', sp
             });
 
             if (!response.ok) {
-                throw new Error(`Failed to fetch patient name for ID: ${patientId}`);
+                throw new Error(`Failed to fetch patient details for ID: ${patientId}`);
             }
 
             const data = await response.json();
-            return data.name || 'Unknown'; // Use name or fallback to "Unknown"
+            return {
+                name: data.name || 'Unknown', // Use name or fallback to "Unknown"
+                bartelScale: data.bartelScale || 0, // Use bartelScale or fallback to 0
+            };
         } catch (error) {
-            console.error(`Error fetching patient name for ID ${patientId}:`, error);
-            return 'Error fetching patient name'; // Fallback for error case
+            console.error(`Error fetching details for patient ID ${patientId}:`, error);
+            return { name: 'Error fetching patient', bartelScale: 0 }; // Fallback for error case
         }
     };
 
@@ -40,12 +43,12 @@ export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', sp
         const fetchPatients = async () => {
             if (patients.length) {
                 const validIds = patients.filter((id) => id); // Filter valid IDs
-                const fetchedNames = await Promise.all(
-                    validIds.map((id) => fetchPatientName(id)) // Fetch names for each ID
+                const fetchedData = await Promise.all(
+                    validIds.map((id) => fetchPatientDetails(id)) // Fetch name and bartelScale for each ID
                 );
-                setPatientNames(fetchedNames);
+                setPatientData(fetchedData);
             } else {
-                setPatientNames([]); // If there are no patients, set empty array
+                setPatientData([]); // If there are no patients, set empty array
             }
         };
 
@@ -76,8 +79,8 @@ export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', sp
                     <p className="main-page-user-id">
                         <strong>User ID:</strong> {userId}
                     </p>
-
                 )}
+                {/* Phone Number */}
                 {phoneNumber && (
                     <p className="user-phone-number">
                         <strong>Phone Number:</strong> {phoneNumber}
@@ -104,18 +107,20 @@ export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', sp
                 )}
 
                 {/* Patients Section (conditionally display if there are patients) */}
-                {patientNames.length > 0 && (
-                    <section className="DoctorsPatients">
-                        <h2 className="section-title">Patients:</h2>
-                        <ul>
-                            {patientNames.map((name, index) => (
-                                <li key={index}>
-                                    <strong>{index + 1}</strong>. {name}
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                )}
+                {patientData.map((patient, index) => (
+                    <li key={index}>
+
+                            <strong></strong> {patient.name}
+
+                        <div className="bartel-scale">
+                            <span className="bartel-scale-label">Barthel Scale:</span>
+                            <div className="bartel-scale-bar">
+                                <span style={{ width: `${patient.bartelScale}%` }}></span>
+                            </div>
+                            <span>{patient.bartelScale}</span>
+                        </div>
+                    </li>
+                ))}
 
                 {/* Notes Section (conditionally display if userId exists) */}
                 {userId && (

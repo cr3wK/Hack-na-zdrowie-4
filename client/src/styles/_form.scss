@@ -1,42 +1,84 @@
 .form {
   @include flex-center;
 
-  /* Общие стили для label и input */
+  /* Общие стили для всех input и label */
   label {
     margin: 0.25rem 0;
+    font-family: 'Roboto Light', sans-serif;
+    font-size: 1rem; /* Сделал шрифт немного больше для читаемости */
+    color: $dark;
   }
 
   input {
-    height: 30px;
-    padding: 0.25rem;
-    border: 1px solid $primary;
-    border-radius: 2px;
+    height: 42px; /* Увеличенная высота */
+    padding: 0.6rem 1rem; /* Удобное пространство внутри */
+    font-size: 1rem; /* Больше размер текста */
+    background-color: #f9f9f9; /* Удобный светлый фон */
+    border: 2px solid lighten($primary, 40%);
+    border-radius: 8px; /* Более выраженное скругление */
     outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      border-color: lighten($primary, 20%); /* Легкий акцент при наведении */
+    }
+
+    &:focus {
+      border-color: $primary; /* Цвет при активации */
+      box-shadow: 0 0 10px rgba($primary, 0.3); /* Добавлен glow */
+    }
 
     &:disabled {
-      background-color: $light;
-      opacity: 0.6;
+      background-color: #f2f2f2; /* Визуально видно, что поле недоступно */
+      opacity: 0.7;
       cursor: not-allowed;
     }
   }
 
+  /* Кнопки */
   .btn {
-    height: 28px;
-    width: 28px;
+    height: 40px;
+    width: 40px;
     background-color: $primary;
+    color: #fff;
+    border-radius: 50%; /* Круглая форма */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken($primary, 15%); /* Насыщенный цвет при наведении */
+      transform: translateY(-2px); /* Поднятие */
+    }
+
+    &:active {
+      transform: translateY(0); /* Эффект нажатия */
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
     &.close {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
+      background-color: lighten($primary, 20%);
     }
 
     &.chat {
       margin-top: 1rem;
-      padding: 0.25rem 1rem;
+      padding: 0.5rem 1.2rem; /* Сделал чуть шире для красоты */
       width: auto;
-      height: 36px;
-      color: $light;
-      border-radius: 20px;
+      height: 42px;
+      border-radius: 20px; /* Овальная форма */
+      background-color: $primary;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 3px 6px rgba($primary, 0.2); /* Тень для кнопки */
+
+      &:hover {
+        background-color: darken($primary, 10%);
+        box-shadow: 0 5px 8px rgba($primary, 0.3); /* Глубокая тень */
+      }
     }
   }
 
@@ -49,38 +91,44 @@
   }
 
   &.message {
-    display: flex; /* Важно для горизонтального расположения */
+    display: flex;
     align-items: center;
-    justify-content: space-between;/* Центрируем по вертикали */
-    gap: 0.75rem; /* Пробел между элементами */
-    width: 100%; /* Форма занимает всю ширину */
-    padding: 0.5rem;
+    justify-content: space-between;
+    gap: 1rem; /* Пространство между элементами */
+    width: 100%;
+    padding: 0.85rem; /* Просторнее внутри */
     background-color: #fff;
-    border-top: 1px solid #eee;
+    border-top: 2px solid lighten($dark, 15%);
+    border-radius: 8px; /* Скругленные края */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08); /* Легкая тень */
 
     input {
       flex-grow: 1;
-      height: 36px; /* чтобы подогнать под кнопки */
+      height: 46px;
       padding: 0.5rem 1rem;
-      font-size: 14px;
+      font-size: 1rem;
     }
 
     .btn {
-      flex-shrink: 0; /* Кнопка отправки не уменьшается */
+      flex-shrink: 0;
       display: flex;
       justify-content: center;
-
       align-items: center;
       background-color: $primary;
-      color: $light;
-      border-radius: 50%; /* Закруглённая кнопка отправки */
+      color: #fff;
+      border-radius: 50%; /* Круглая форма кнопки отправки */
 
       &:hover {
         background-color: darken($primary, 10%);
+        transform: scale(1.05); /* Легкое увеличение при наведении */
+      }
+
+      &:active {
+        transform: scale(1);
       }
     }
 
-    /* Кнопки, такие как EmojiMart, FileInput, Recorder */
+    /* Кнопки для функциональности (Emoji, файл, запись) */
     .emoji-picker,
     .file-input,
     .recorder {
@@ -88,20 +136,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%; /* Круглая форма */
-      background-color: #f0f0f0;
+      width: 40px; /* Кнопки чуть больше */
+      height: 40px;
+      border-radius: 50%; /* Круглые кнопки */
+      background-color: #f2f2f2;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease, transform 0.2s ease;
 
-      &:hover {
-        background-color: #e0e0e0;
-      }
+
 
       svg {
-        font-size: 14px; /* Размер иконки */
-        color: $dark;
+        font-size: 20px; /* Иконки увеличены */
+        color: darken($dark, 20%);
       }
     }
   }

@@ -16,7 +16,7 @@ export default function useChat() {
         query: {
           roomId: user?.roomId,
           userName: user?.name,
-          specialization: user?.specialization
+
         }
       })
   )
@@ -39,7 +39,7 @@ export default function useChat() {
       // Обновляем данные пользователя (включая specialization)
       const updatedUser = {
         ...user,
-        specialization: data.specialization // Добавляем специализацию
+
       }
 
       setUser(updatedUser)

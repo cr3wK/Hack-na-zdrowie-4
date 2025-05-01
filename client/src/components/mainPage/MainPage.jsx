@@ -3,7 +3,7 @@ import PulseStatus from 'components/PulseStatus/PulseStatus'; // Path to PulseSt
 import Notes from 'components/Notes/Notes'; // Path to Notes component
 import './mainPage.css';
 
-export function MainPage({ userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
+export function MainPage({ phoneNumber = 'number',userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
     const [bpm, setBpm] = useState(72); // Default bpm value, simulated as dynamic
     const [patientNames, setPatientNames] = useState([]); // State for patient names
 
@@ -76,8 +76,13 @@ export function MainPage({ userId, userName = 'Guest', specialization = '', pati
                     <p className="main-page-user-id">
                         <strong>User ID:</strong> {userId}
                     </p>
-                )}
 
+                )}
+                {phoneNumber && (
+                    <p className="user-phone-number">
+                        <strong>Phone Number:</strong> {phoneNumber}
+                    </p>
+                )}
                 {/* Specialization (conditionally display, only if non-empty) */}
                 {specialization && (
                     <p className="main-page-specialization">

@@ -7,16 +7,19 @@ import { MainPage } from 'components/mainPage/MainPage';
 import { CalendarComponent } from 'components/calendar/CalendarComponent';
 
 export const Room = () => {
+
     const { users, messages, log, sendMessage, removeMessage } = useChat();
     const [selectedUser, setSelectedUser] = useState(null);
 
     const handleUserClick = (user) => {
+
         setSelectedUser({
             userId: user.userId || user.id,
             userName: user.userName || user.name || 'Guest',
             specialization: user.specialization,
             allPatients: user.allPatients || [],
-            surname: user.surname// Передаём список пациентов
+            surname: user.surname,// Передаём список пациентов
+            phoneNumber: user.phoneNumber
         });
     };
 
@@ -43,7 +46,8 @@ export const Room = () => {
                     userName={selectedUser.userName}
                     surname={selectedUser.surname} // Фамилия пациента/доктора
                     specialization={selectedUser.specialization} // Специализация: 'doctor' или 'patient'
-                    patients={selectedUser.specialization === 'doctor' ? selectedUser.allPatients : []} // Список видят только доктора
+                    patients={selectedUser.specialization === 'doctor' ? selectedUser.allPatients : []}
+                    number = {selectedUser.phoneNumber}// Список видят только доктора
                     onClose={closeUserPanel}
                 />
             )}

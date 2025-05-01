@@ -56,7 +56,8 @@ router.post('/login', async (req, res, next) => {
             roomId: doctor.roomIds[0],
             specialization: doctor.specialization,
             allRoomIds: doctor.roomIds,
-            allPatients: doctor.patients
+            allPatients: doctor.patients,
+            phoneNumber: doctor.phoneNumber,
         });
     } catch (e) {
         next(e);

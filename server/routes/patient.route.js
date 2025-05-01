@@ -68,7 +68,17 @@ router.post('/login', async (req, res, next) => {
             maxAge: 15 * 60 * 1000
         });
 
-        res.json({ ok: true, userId:patient._id, name: patient.name, surname: patient.surname, roomId: patient.roomIds[0]});
+        res.json({
+            ok: true,
+            userId:patient._id,
+            name: patient.name,
+            surname: patient.surname,
+            roomId: patient.roomIds[0],
+            phoneNumber: patient.phoneNumber,
+            roomIds: patient.roomIds,
+            illnessDescription: patient.illnessDescription,
+            drugs: patient.drugs
+        });
     } catch (e) { next(e); }
 });
 

@@ -1,65 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import storage from 'utils/storage';
-import { USER_KEY } from 'constants';
+import React, { useState } from 'react';
+import './userChooser.css'; // Стили компонента
 
-export const UserChooser = () => {
-    const [users, setUsers] = useState([]);
-    const [selectedUserId, setSelectedUserId] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+export const UserChooser = ({ users = [], onUserSelect }) => {
+    const [selectedUserId, setSelectedUserId] = useState(null); // ID выбранного пользователя
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await axios.get('/api/users');
-                setUsers(response.data);
-                setLoading(false);
-            } catch (err) {
-                console.error('Ошибка при загрузке пользователей:', err);
-                setError('Не удалось загрузить список пользователей');
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, []);
-
-    const handleSelection = (e) => {
-        setSelectedUserId(e.target.value);
-    };
-
-    const handleLogin = () => {
-        const selectedUser = users.find((user) => user._id === selectedUserId);
-
-        if (selectedUser) {
-            storage.set(USER_KEY, {
-                id: selectedUser._id,
-                name: selectedUser.name,
-                roomId: selectedUser.roomIds?.[0] || 'main_room',
-            });
-
-            window.location.reload();
+    // Обработчик выбора пользователя
+    const handleUserSelection = (user) => {
+        setSelectedUserId(user.userId || user.id); // Устанавливаем выбранного пользователя
+        if (onUserSelect) {
+            onUserSelect(user); // Передаем данные выбранного пользователя
         }
     };
 
-    if (loading) return <p>Загрузка...</p>;
-    if (error) return <p style={{ color: 'red' }}>{error}</p>;
-
     return (
-        <div>
-            <h3>Выберите пользователя</h3>
-            <select value={selectedUserId} onChange={handleSelection}>
-                <option value="">Выберите...</option>
+        <div className="user-chooser">
+            <h3>Список пользователей</h3>
+            <ul className="user-chooser-list">
                 {users.map((user) => (
-                    <option key={user._id} value={user._id}>
-                        {user.name} {user.surname}
-                    </option>
+                    <li
+                        key={user.userId || user.id}
+                        className={`user-chooser-item ${user.userId === selectedUserId ? 'active' : ''}`}
+                        onClick={() => handleUserSelection(user)}
+                    >
+                        {user.name} {user.surname} {/* Имя и фамилия пользователя */}
+                    </li>
                 ))}
-            </select>
-            <button onClick={handleLogin} disabled={!selectedUserId}>
-                Войти
-            </button>
+            </ul>
         </div>
     );
 };

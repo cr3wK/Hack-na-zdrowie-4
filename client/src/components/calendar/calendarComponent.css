@@ -1,7 +1,9 @@
+/* Calendar wrapper */
 .calendar-wrapper {
-    position: relative; /* Чтобы иконка и календарь могли располагаться в одном обрамлении */
+    position: relative;
 }
 
+/* Calendar button */
 .calendar-icon-btn {
     position: fixed;
     top: 10px;
@@ -37,6 +39,7 @@
     z-index: 999;
 }
 
+/* Add event button */
 .add-event-btn {
     margin-top: 10px;
     width: 40px;
@@ -56,16 +59,55 @@
     background: #0056b3;
 }
 
-.events-list {
+/* Event list for selected date */
+.events-list, .all-events-list {
     margin-top: 15px;
     list-style: none;
     padding: 0;
 }
 
-.events-list li {
+.events-list li, .all-events-list li {
     font-size: 14px;
     background: #e9ecef;
     padding: 8px;
     border-radius: 4px;
     margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Highlight day with events */
+.highlight-day {
+    background-color: #ff9900 !important;
+    color: white !important;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* Delete event button */
+.delete-event-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-event-btn:hover {
+    color: #a72229;
+}
+
+/* Full list of events */
+.all-events-container h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+/* Scrollable container for many events */
+.all-events-container {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
 }

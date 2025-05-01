@@ -27,18 +27,18 @@ export default function UserList({ users, onUserClick }) {
                     <li
                         key={userId}
                         className="item user"
-                        onClick={() => onUserClick({ id: userId, name: userName })}
+                        onClick={() => onUserClick(users.find(user => user.userId === userId))}
                     >
                         {/* Точка состояния с фиксированным цветом */}
                         <div
                             className="status-dot"
-                            style={{ backgroundColor: userColors[userId] }}
+                            style={{backgroundColor: userColors[userId]}}
                         ></div>
 
                         {/* Имя пользователя с фиксированным цветом */}
                         <span
                             className="user-link"
-                            style={{ color: userColors[userId] }}
+                            style={{color: userColors[userId]}}
                         >
                             {userName}
                         </span>

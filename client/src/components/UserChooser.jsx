@@ -2,20 +2,20 @@ import React from 'react';
 import storage from 'utils/storage';
 import { USER_KEY } from 'constants';
 import { useNavigate } from 'react-router-dom';
+import useChat from 'hooks/useChat';
 
 export const UserChooser = () => {
     const user = storage.get(USER_KEY);
     const navigate = useNavigate();
-    console.log(user);
+    const { joinRoom } = useChat(); // подключаем joinRoom
+
     if (!user) {
         return <h1>Error</h1>;
     }
 
     const handleRoomSelect = (roomId) => {
-        console.log(`room: ${roomId}`);
-        user.roomId = roomId;
-        storage.set(USER_KEY, user);
-        navigate(`/room/${roomId}`);
+        joinRoom(roomId); // отправляем на сервер
+        navigate(`/room/${roomId}`); // обновляем URL
     };
 
     return (
@@ -25,7 +25,7 @@ export const UserChooser = () => {
                 user.roomIds.map((roomId) => (
                     <p key={roomId}>
                         <button onClick={() => handleRoomSelect(roomId)}>
-                            {user.name} —  {roomId}
+                            {user.name} — {roomId}
                         </button>
                     </p>
                 ))

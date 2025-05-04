@@ -8,7 +8,7 @@ export const UserChooser = () => {
     const navigate = useNavigate();
     console.log(user);
     if (!user) {
-        return <h1>Blyat</h1>;
+        return <h1>Error</h1>;
     }
 
     const handleRoomSelect = (roomId) => {
@@ -20,17 +20,17 @@ export const UserChooser = () => {
 
     return (
         <div>
-            <h2>Выберите комнату:</h2>
+            <h2>Select chat:</h2>
             {user.roomIds && user.roomIds.length > 0 ? (
                 user.roomIds.map((roomId) => (
                     <p key={roomId}>
                         <button onClick={() => handleRoomSelect(roomId)}>
-                            {user.name} — Комната {roomId}
+                            {user.name} —  {roomId}
                         </button>
                     </p>
                 ))
             ) : (
-                <p>У вас нет комнат.</p>
+                <p>You don't have chats yet</p>
             )}
         </div>
     );

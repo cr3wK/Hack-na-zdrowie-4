@@ -1,90 +1,125 @@
-import { SERVER_URI, USER_KEY } from 'constants'
-import { useEffect, useRef, useState } from 'react'
-import { io } from 'socket.io-client'
-import storage from 'utils/storage'
+import { SERVER_URI, USER_KEY } from 'constants';
+import { useEffect, useRef, useState } from 'react';
+import { io } from 'socket.io-client';
+import storage from 'utils/storage';
 
-export default function useChat() {
-  // Получаем пользователя из локального хранилища
-  const [user, setUser] = useState(storage.get(USER_KEY) || {})
-  const [users, setUsers] = useState([])
-  const [messages, setMessages] = useState([])
-  const [log, setLog] = useState(null)
-  const [rooms, setRooms] = useState([])
+export default function useChat(currentRoomId) {
+  const [user, setUser] = useState(storage.get(USER_KEY) || {}); // Загружаем данные о пользователе
+  const [users, setUsers] = useState([]); // Пользователи в чате
+  const [allMessages, setAllMessages] = useState([]); // Все сообщения
+  const [log, setLog] = useState(null); // Логи сервера
+  const [rooms, setRooms] = useState([]); // Доступные комнаты
 
-  const { current: socket } = useRef(
-      io(SERVER_URI, {
-        query: {
-          roomId: user?.roomId,
-          userName: user?.name
-        }
-      })
-  )
+  const socketRef = useRef(null); // Ссылка на сокет
 
-  // Получение специализации пользователя из API
+  // Запрос данных о специализации пользователя
   const fetchUserSpecialization = async () => {
     try {
       const response = await fetch(`${SERVER_URI}/doctor/me`, {
         method: 'GET',
-        credentials: 'include', // Делаем запрос с cookies
-      })
+        credentials: 'include', // Запрос с куками
+      });
 
       if (!response.ok) {
-        console.error('Невозможно получить данные пользователя')
-        return
+        console.error('Невозможно получить данные пользователя');
+        return;
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
-      // Обновляем данные пользователя (включая specialization)
+      // Обновление данных пользователя (добавление specialization)
       const updatedUser = {
         ...user,
+        specialization: data.specialization || 'Unknown',
+      };
 
-      }
-
-      setUser(updatedUser)
-      storage.set(USER_KEY, updatedUser) // Сохраняем данные в локальном хранилище
+      setUser(updatedUser);
+      storage.set(USER_KEY, updatedUser); // Сохраняем обновлённые данные в хранилище
     } catch (error) {
-      console.error('Ошибка при получении данных пользователя:', error)
+      console.error('Ошибка при получении данных пользователя:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    // Загрузка специализации и инициализация сокета
-    fetchUserSpecialization()
+    if (!socketRef.current) {
+      // Создаём подключение к серверу через сокет
+      socketRef.current = io(SERVER_URI, {
+        query: {
+          roomId: currentRoomId,
+          userName: user?.name,
+        },
+      });
 
-    console.log(socket)
-    socket.emit('user:add', user)
-    socket.emit('message:get')
-    socket.emit('room_list:get')
+      // Отправляем данные пользователя при подключении (только 1 раз)
+      socketRef.current.emit('user:add', { ...user, roomId: currentRoomId });
 
-    socket.on('log', setLog)
-    socket.on('user_list:update', setUsers)
-    socket.on('message_list:update', setMessages)
-    socket.on('room_list:update', setRooms)
-    socket.on('room:joined', (roomName) => {
-      const updatedUser = { ...user, roomId: roomName }
-      storage.set(USER_KEY, updatedUser)
-      setUser(updatedUser) // Обновляем состояние пользователя
-      window.location.reload()
-    })
+      // Инициализация получения данных от сервера
+      socketRef.current.emit('message:get'); // Получение сообщений
+      socketRef.current.emit('room_list:get'); // Получение списка комнат
 
-    return () => {
-      socket.off('log')
-      socket.off('user_list:update')
-      socket.off('message_list:update')
-      socket.off('room_list:update')
-      socket.off('room:joined')
+      // Слушатели данных от сервера
+      socketRef.current.on('log', setLog);
+      socketRef.current.on('user_list:update', (serverUsers) => {
+        // Удаляем дубликаты пользователей
+        const uniqueUsers = serverUsers.filter((value, index, self) => {
+          return index === self.findIndex(user => user.name === value.name); // Сравнение по имени
+        });
+        setUsers(uniqueUsers);
+      });
+
+      socketRef.current.on('message_list:update', setAllMessages); // Обновляем все полученные сообщения
+      socketRef.current.on('room_list:update', setRooms); // Обновляем список комнат
+
+      // Обработка события "room:joined" (переподключение пользователя)
+      socketRef.current.on('room:joined', (roomName) => {
+        const updatedUser = { ...user, roomId: roomName };
+        setUser(updatedUser);
+        storage.set(USER_KEY, updatedUser); // Сохраняем обновлённые данные
+        window.location.reload(); // Перезагрузка страницы
+      });
     }
-  }, [])
 
-  const sendMessage = (message) => socket.emit('message:add', message)
-  const removeMessage = (message) => socket.emit('message:remove', message)
+    // Загружаем данные о специализации пользователя
+    fetchUserSpecialization();
 
-  const createRoom = (roomName) => socket.emit('room:create', roomName)
-  const joinRoom = (roomName) => socket.emit('room:join', roomName)
+    // Очистка сокета и событий при размонтировании
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect(); // Отключаем соединение
+        socketRef.current = null; // Сбрасываем сокет
+      }
+    };
+  }, [currentRoomId]); // Выполняем эффект при изменении текущей комнаты
+
+  // Отправка сообщения
+  const sendMessage = (message) => {
+    socketRef.current.emit('message:add', message);
+  };
+
+  // Удаление сообщения
+  const removeMessage = (message) => {
+    socketRef.current.emit('message:remove', message);
+  };
+
+  // Создание комнаты
+  const createRoom = (roomName) => {
+    socketRef.current.emit('room:create', roomName);
+  };
+
+  // Присоединение к комнате
+  const joinRoom = (roomName) => {
+    const updatedUser = { ...user, roomId: roomName };
+    setUser(updatedUser);
+    storage.set(USER_KEY, updatedUser); // Обновляем данные пользователя
+    socketRef.current.emit('room:join', roomName); // Отправляем событие для подключения к комнате
+  };
+
+  // Сообщения только для текущей комнаты
+  const messages = allMessages.filter((msg) => msg.roomId === currentRoomId);
 
   return {
-    user, // Возвращаем объект user с новой информацией (включая specialization)
+    // Возвращаем состояния и методы
+    user,
     users,
     messages,
     log,
@@ -92,6 +127,6 @@ export default function useChat() {
     sendMessage,
     removeMessage,
     createRoom,
-    joinRoom
-  }
+    joinRoom,
+  };
 }

@@ -1,0 +1,111 @@
+/* Стиль для кнопки */
+.medications-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: all 0.3s ease; /* Переходы для анимации */
+}
+
+.medications-button:hover {
+    background-color: #218838; /* Немного темнее при наведении */
+    transform: scale(1.1); /* Увеличение кнопки */
+    opacity: 0.95;
+}
+
+/* Фоновая анимация модального окна */
+.medications-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease; /* Плавное появление фона */
+}
+
+/* Контент для модального окна */
+.medications-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    max-height: 80%;
+    overflow-y: auto; /* Скроллинг, если контент выходит за пределы окна */
+    position: relative;
+    text-align: center;
+    transform: translateY(-50px); /* Начальная позиция для анимации */
+    opacity: 0; /* Начальная прозрачность */
+    animation: slideIn 0.5s ease forwards; /* Плавный сдвиг вниз с появлением */
+}
+
+/* Стиль для кнопки закрытия */
+.medications-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.medications-modal-close:hover {
+    color: #dc3545; /* Красный цвет при наведении */
+}
+
+/* Заголовок модального окна */
+.medications-title {
+    font-size: 1.5rem;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+/* Список медикаментов */
+.medications-list {
+    list-style: none;
+    padding: 0;
+}
+
+.medications-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.medications-item p {
+    margin: 5px 0;
+}
+
+/* Анимация появления и сдвига */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

@@ -16,7 +16,7 @@
 }
 
 body {
-  @include flex-center;
+  @include flex-center();
   background-color: lighten($light, 7%); /* Базовый фон */
   color: $dark; /* Основной цвет текста */
   font-family: 'Poppins', sans-serif; /* Применяется новый шрифт */
@@ -152,7 +152,12 @@ audio {
   outline: none;
   white-space: nowrap;
 }
-
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
 /* Анимация появления */
 @keyframes fadeIn {
   from {

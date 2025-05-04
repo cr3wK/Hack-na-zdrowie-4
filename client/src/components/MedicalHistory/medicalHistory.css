@@ -1,0 +1,99 @@
+/* Анимация для кнопки */
+.medical-history-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: all 0.3s ease; /* Анимация при наведении мыши */
+}
+
+.medical-history-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Увеличение кнопки при наведении */
+    opacity: 0.9;
+}
+
+/* Фоновая анимация модального окна */
+.medical-history-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease; /* Плавное появление заднего слоя */
+}
+
+/* Анимация содержимого модального окна */
+.medical-history-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-height: 90%;
+    overflow-y: scroll;
+    position: relative;
+    text-align: center;
+    transform: translateY(-50px); /* Начальная позиция */
+    opacity: 0; /* Начальная невидимость */
+    animation: slideIn 0.5s ease forwards; /* Плавный сдвиг вниз */
+}
+
+/* Кнопка закрытия */
+.medical-history-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.medical-history-modal-close:hover {
+    color: #007bff; /* Смена цвета при наведении */
+}
+
+/* Заголовок модального окна */
+.medical-history-modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Текст болезни */
+.medical-history-modal-illness {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Анимация для modals и плавного появления */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Исчезновение */
+    }
+    to {
+        opacity: 1; /* Полная видимость */
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

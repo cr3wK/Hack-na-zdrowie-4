@@ -1,0 +1,90 @@
+.user-chooser {
+    margin-top: 2rem;
+    padding: 20px;
+    border: 1px solid #dcdcdc; /* Светло-серая граница */
+    border-radius: 10px; /* Скругленные углы */
+    background-color: #f9f9f9; /* Очень легкий фон */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тень для создания объема */
+    max-width: 700px; /* Ограничение по ширине */
+    margin-left: auto;
+    margin-right: auto; /* Центрирование компонента */
+    animation: fade-in 0.5s ease;
+    font-family: 'Arial', sans-serif; /* Чистый и читаемый шрифт */
+}
+
+/* Анимация появления */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Лёгкое смещение вниз */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стиль заголовка */
+.user-chooser .title {
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #007bff; /* Яркий синий цвет */
+    text-align: center; /* Центрирование заголовка */
+}
+
+/* Список опций */
+.user-chooser .user-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border: 1px solid #d3d3d3; /* Светлая граница */
+    border-radius: 8px;
+    background-color: #ffffff; /* Белый фон */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Плавный переход для интерактивности */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Легкая тень */
+}
+
+/* Эффекты при наведении */
+.user-chooser .user-option:hover {
+     /* Меняем цвет фона на синий */
+    color: #ffffff; /* Цвет текста становится белым */
+    transform: scale(1.02); /* Легкое увеличение элемента */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Более насыщенная тень */
+}
+
+/* Текстовая информация о пользователе */
+.user-chooser .user-option .user-info {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.user-chooser .user-option .user-info .doctor {
+    color: #007bff; /* Зеленый цвет для врача */
+    font-weight: bold;
+}
+
+.user-chooser .user-option .user-info .patient {
+    color: darkblue; /* Желтый цвет для пациента */
+    font-weight: bold;
+}
+
+/* Сообщение об ошибке */
+.user-chooser .error-message {
+    color: #dc3545; /* Красный цвет */
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+/* Заглушка для загрузки */
+.user-chooser .loading-message {
+    text-align: center;
+    font-size: 1rem;
+    color: #6c757d; /* Серый цвет */
+    margin-top: 1rem;
+}

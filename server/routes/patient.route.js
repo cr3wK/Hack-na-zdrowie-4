@@ -70,14 +70,16 @@ router.post('/login', async (req, res, next) => {
 
         res.json({
             ok: true,
-            userId:patient._id,
+            userId: patient._id,
             name: patient.name,
             surname: patient.surname,
             roomId: patient.roomIds[0],
+            specialization: patient.specialization,
+            allRoomIds: patient.roomIds,
             phoneNumber: patient.phoneNumber,
-            roomIds: patient.roomIds,
-            illnessDescription: patient.illnessDescription,
-            drugs: patient.drugs
+            drugs:   patient.drugs[0],
+            pesel: patient.pesel,
+            illness: patient.illnessDescription
         });
     } catch (e) { next(e); }
 });

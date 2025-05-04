@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PulseStatus from 'components/PulseStatus/PulseStatus'; // Path to PulseStatus component
 import Notes from 'components/Notes/Notes'; // Path to Notes component
 import './mainPage.css';
-
+import MedicalHistory from "../MedicalHistory/MedicalHistory";
+import Medications from "../Medications/Medications";
 export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
     const [bpm, setBpm] = useState(72); // Default bpm value, simulated as dynamic
     const [patientData, setPatientData] = useState([]); // State for patient data including names and bartelScale
@@ -104,8 +105,21 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
                         <h2 className="section-title">Pulse Status</h2>
                         <PulseStatus bpm={bpm} />
                     </section>
-                )}
 
+                )}
+                {!specialization && (
+                    <section className="illness-section">
+                        <MedicalHistory userId={userId}/>
+                    </section>
+
+                )}
+                {!specialization && (
+                    <section className="medication-section">
+                        <h2 className="section-title">Medications</h2>
+                        <Medications userId={userId} />
+                    </section>
+
+                )}
                 {/* Patients Section (conditionally display if there are patients) */}
                 {patientData.map((patient, index) => (
                     <li key={index}>
@@ -129,6 +143,9 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
                         <Notes userId={userId} />
                     </section>
                 )}
+
+
+
             </div>
         </div>
     );

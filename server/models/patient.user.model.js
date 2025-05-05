@@ -43,9 +43,19 @@ const patientSchema = new Schema({
         type: String,
         required: false
     }],
-    drugs:[{
-        type: String,
-        required: false
+    drugs: [{
+        name: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: false
+        },
+        dosage: {
+            type: String,
+            required: false
+        }
     }],
     passwordHash: {
         type: String,

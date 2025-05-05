@@ -3,9 +3,6 @@ import mongoose from 'mongoose'
 const {Schema, model} = mongoose
 
 const doctorSchema = new Schema({
-
-
-
     email: {
         type: String,
         required: true,
@@ -44,5 +41,3 @@ const doctorSchema = new Schema({
 }, {timestamps: true});
 
 export default model('user.doctor', doctorSchema)
-
-//лікар - імя прізвище, мейл id пароль спеціалізація масив паціентів

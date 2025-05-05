@@ -160,10 +160,24 @@ router.patch('/drugs_change_patient', async (
         return res.sendStatus(401);
     }
     try {
-        const patient = await Patient.findById(patientId);
-        if (!patient) return res.sendStatus(404);
-        patient.drugs = drugs;
-        await patient.save();
+        await Patient.findByIdAndUpdate(
+            patientId,
+            {
+                $addToSet: {
+                    drugs: {
+                        $each: req.body.drugs
+                    }
+                }
+            },
+            {new: true}  // return the updated document
+        )
+            .then(patient => {
+                if (!patient) return res.sendStatus(404);
+            })
+            .catch(err => {
+                console.error(err);
+                res.sendStatus(500);
+            });
 
         res.status(200).json({ok: true});
     } catch (err) {

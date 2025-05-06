@@ -4,7 +4,7 @@ import Notes from 'components/Notes/Notes'; // Path to Notes component
 import './mainPage.css';
 import MedicalHistory from "../MedicalHistory/MedicalHistory";
 import Medications from "../Medications/Medications";
-export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
+export function MainPage({ userSurname,phoneNumber = 'number', userId, userName = 'Guest', specialization = '', patients = [], onClose }) {
     const [bpm, setBpm] = useState(72); // Default bpm value, simulated as dynamic
     const [patientData, setPatientData] = useState([]); // State for patient data including names and bartelScale
 
@@ -30,6 +30,7 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
             }
 
             const data = await response.json();
+            console.log(data);
             return {
                 name: data.name || 'Unknown', // Use name or fallback to "Unknown"
                 bartelScale: data.bartelScale || 0, // Use bartelScale or fallback to 0
@@ -48,8 +49,10 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
                     validIds.map((id) => fetchPatientDetails(id)) // Fetch name and bartelScale for each ID
                 );
                 setPatientData(fetchedData);
+                console.log(fetchedData);
             } else {
-                setPatientData([]); // If there are no patients, set empty array
+                setPatientData([]);
+                // If there are no patients, set empty array
             }
         };
 
@@ -61,7 +64,7 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
         if (specialization.toLowerCase() === 'doctor') {
             return `Welcome, Dr. ${userName || 'Guest'}!`;
         }
-        return `Good day, ${userName || 'Guest'}!`;
+        return ` ${userName || 'Guest'} ` + `${userSurname}`;
     };
 
     return (
@@ -117,14 +120,19 @@ export function MainPage({ phoneNumber = 'number', userId, userName = 'Guest', s
                     <section className="medication-section">
                         <h2 className="section-title">Medications</h2>
                         <Medications userId={userId} />
+
                     </section>
 
                 )}
+
+
+
                 {/* Patients Section (conditionally display if there are patients) */}
                 {patientData.map((patient, index) => (
+
                     <li key={index}>
 
-                            <strong></strong> {patient.name}
+                        <strong></strong> {patient.name}
 
                         <div className="bartel-scale">
                             <span className="bartel-scale-label">Barthel Scale:</span>

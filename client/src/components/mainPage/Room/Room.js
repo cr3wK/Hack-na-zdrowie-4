@@ -48,7 +48,8 @@ export const Room = () => {
         <div className="container chat">
             {/* Календарь */}
            <div>
-               <CalendarComponent/>
+               <CalendarComponent
+               specialization = {user.specialization}/>
                <UserChooser/>
            </div>
 
@@ -73,11 +74,12 @@ export const Room = () => {
                 <MainPage
                     userId={selectedUser.userId}
                     userName={selectedUser.userName}
-                    surname={selectedUser.surname} // Фамилия пациента/доктора
+                    userSurname={selectedUser.surname} // Фамилия пациента/доктора
                     specialization={selectedUser.specialization} // Специализация: 'doctor' или 'patient'
-                    patients={selectedUser.specialization === 'doctor' ? selectedUser.allPatients : []}
+                    patients={selectedUser.specialization === 'doctor' || 'pielęgniarka' ? selectedUser.allPatients : []}
                     phoneNumber={selectedUser.phoneNumber}// Список видят только доктора
                     onClose={closeUserPanel}
+                    bartelScale={selectedUser.bartelScale}
                 />
             )}
 

@@ -3,13 +3,15 @@ import storage from 'utils/storage';
 import { USER_KEY } from 'constants';
 import { useNavigate } from 'react-router-dom';
 import useChat from 'hooks/useChat';
-import './userChooser.css'
+import './userChooser.css';
+
 export const UserChooser = () => {
     const user = storage.get(USER_KEY);
     const navigate = useNavigate();
     const { joinRoom } = useChat();
 
     const [roomsDetails, setRoomsDetails] = useState([]);
+    const [searchPesel, setSearchPesel] = useState('');
     const [error, setError] = useState(null);
 
     // Функция получения данных комнаты
@@ -29,10 +31,11 @@ export const UserChooser = () => {
                 id: roomId,
                 doctorName: data.doctor?.name || "Unknown Doctor",
                 patientName: data.patient?.name || "Unknown Patient",
+                patientPesel: data.patient?.pesel || "Unknown PESEL"
             };
         } catch (error) {
             console.error(`Error fetching room details (ID: ${roomId}):`, error);
-            return { id: roomId, doctorName: "Error", patientName: "Error" };
+            return { id: roomId, doctorName: "Error", patientName: "Error", patientPesel: "Error" };
         }
     };
 
@@ -48,7 +51,7 @@ export const UserChooser = () => {
                 const roomDetails = await Promise.all(
                     user.allRoomIds.map((roomId) => fetchRoomDetails(roomId))
                 );
-                setRoomsDetails(roomDetails);
+                setRoomsDetails(roomDetails); // Изначально отображаем все комнаты
             } catch (err) {
                 setError("Error while loading room data.");
                 console.error("Ошибка загрузки данных комнат:", err);
@@ -66,6 +69,11 @@ export const UserChooser = () => {
         return <p className="error-message">{error}</p>;
     }
 
+    // Фильтруем комнаты в момент рендера
+    const filteredRooms = roomsDetails.filter((room) =>
+        searchPesel.trim() === '' || room.patientPesel.toLowerCase().includes(searchPesel.toLowerCase())
+    );
+
     const handleRoomSelect = (roomId) => {
         joinRoom(roomId); // отправляем на сервер
         navigate(`/room/${roomId}`); // обновляем URL
@@ -74,9 +82,19 @@ export const UserChooser = () => {
     return (
         <div className="user-chooser">
             <h2 className="title">Chats</h2>
-            {roomsDetails.length > 0 ? (
+            <div className="search-box">
+                <label htmlFor="pesel-search">Search by PESEL:</label>
+                <input
+                    type="text"
+                    id="pesel-search"
+                    value={searchPesel}
+                    onChange={(e) => setSearchPesel(e.target.value)}
+                    placeholder="Enter patient PESEL"
+                />
+            </div>
+            {filteredRooms.length > 0 ? (
                 <ul className="user-option-list">
-                    {roomsDetails.map((room) => (
+                    {filteredRooms.map((room) => (
                         <li
                             key={room.id}
                             className="user-option"
@@ -85,13 +103,17 @@ export const UserChooser = () => {
                             <div className="user-info">
                                 <span className="doctor">Doctor: {room.doctorName}</span>
                                 {' | '}
-                                <span className="patient">Patient: {room.patientName}</span>
+                                <span className="patient">
+                                    Patient: {room.patientName}
+                                    {' | '}
+                                    Numer PESEL: {room.patientPesel}
+                                </span>
                             </div>
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p>Loading rooms...</p>
+                <p>No rooms found.</p>
             )}
         </div>
     );

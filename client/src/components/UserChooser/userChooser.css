@@ -88,3 +88,53 @@
     color: #6c757d; /* Серый цвет */
     margin-top: 1rem;
 }
+
+/* Поисковая строка */
+.user-chooser .search-box {
+    margin-bottom: 20px; /* Отступ ниже строки поиска */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Расстояние между меткой и вводом */
+    align-items: center;
+}
+
+.user-chooser .search-box label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333; /* Тёмно-серый для метки */
+}
+
+.user-chooser .search-box input {
+    width: 80%; /* Ширина поля ввода */
+    padding: 10px 15px; /* Внутренние отступы */
+    border: 1px solid #dcdcdc; /* Светлая граница */
+    border-radius: 8px; /* Скругленные углы */
+    font-size: 1rem;
+    color: #333333; /* Основной цвет текста */
+    background-color: #ffffff; /* Белый фон */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* Лёгкая тень */
+    transition: all 0.3s ease; /* Плавный переход */
+}
+
+.user-chooser .search-box input:focus {
+    border-color: #007bff; /* Ярко-синяя рамка при фокусе */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.25); /* Голубое сияние */
+    outline: none; /* Убираем стандартный outline */
+}
+
+.user-chooser .search-box input::placeholder {
+    color: #999999; /* Светло-серый текст для placeholder */
+    font-style: italic; /* Курсив для показателя */
+}
+
+.user-chooser .search-box input:hover {
+    border-color: #007bff; /* Меняем цвет границы при наведении мыши */
+}
+
+/* Добавление реального UX */
+.user-chooser .search-box input:disabled {
+    background-color: #f5f5f5; /* Светло-серый фон */
+    color: #cccccc; /* Серый цвет текста */
+    border-color: #dddddd; /* Бледная граница */
+    cursor: not-allowed; /* Курсор с характерным видом запрета */
+}

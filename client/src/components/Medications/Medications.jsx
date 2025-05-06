@@ -6,6 +6,7 @@ const Medications = ({ userId }) => {
     const [loading, setLoading] = useState(true); // Состояние загрузки
     const [error, setError] = useState(null); // Состояние ошибки
     const [isModalOpen, setIsModalOpen] = useState(false); // Управляет отображением модального окна
+    const [visibleDescriptions, setVisibleDescriptions] = useState({}); // Управляет видимостью описаний
 
     useEffect(() => {
         const fetchMedications = async () => {
@@ -23,7 +24,7 @@ const Medications = ({ userId }) => {
 
                 const data = await response.json();
                 console.log(data);
-                setMedications(data.drugs || []); // Ожидаем medications как массив
+                setMedications(data.drugs || []); // Ожидаем drugs как массив
             } catch (err) {
                 console.error(err);
                 setError(err.message || 'Error fetching medications');
@@ -37,6 +38,14 @@ const Medications = ({ userId }) => {
             fetchMedications();
         }
     }, [userId]);
+
+    // Хэндлер для управления показом/скрытием описания
+    const toggleDescription = (id) => {
+        setVisibleDescriptions((prevState) => ({
+            ...prevState,
+            [id]: !prevState[id],
+        }));
+    };
 
     // Состояние загрузки
     if (loading) {
@@ -55,12 +64,12 @@ const Medications = ({ userId }) => {
 
     return (
         <>
-            {/* Кнопка для открытия списка медикаментов */}
+            {/* Кнопка для открытия модального окна */}
             <button className="medications-button" onClick={() => setIsModalOpen(true)}>
                 Show Medications
             </button>
 
-            {/* Модальное окно с лекарствами */}
+            {/* Модальное окно с медикаментами */}
             {isModalOpen && (
                 <div className="medications-modal">
                     <div className="medications-modal-content">
@@ -71,19 +80,23 @@ const Medications = ({ userId }) => {
                         </button>
                         <h2 className="medications-title">Your Medications</h2>
                         <ul className="medications-list">
-                            {medications.map((medication, index) => (
-                                <li key={index} className="medications-item">
-                                    <p>
-                                        <strong>Name:</strong> {medication.name}
-                                    </p>
-                                    <p>
-                                        <strong>Description:</strong> {medication.description}
-                                    </p>
-                                    <p>
-                                        <strong>Dosage:</strong> {medication.dosage}
-                                    </p>
-                                </li>
-                            ))}
+                            {medications.map((medication) => (
+                                <li key={medication._id} className="medications-item">
+                                    <p><strong>Name:</strong> {medication.name}</p>
+                                    <button
+                                        className="show-description-button"
+                                        onClick={() => toggleDescription(medication._id)}>
+                                        {visibleDescriptions[medication._id] ? 'Hide Description' : 'Show Description'}
+                                    </button>
+                                    {visibleDescriptions[medication._id] && (
+                                        <p>
+                                            <strong>Description:</strong> {medication.description}
+                                            <br />
+                                            <strong>Dawka:</strong> {medication.dosage}
+                                        </p>
+                                    )}
+                        </li>
+                        ))}
                         </ul>
                     </div>
                 </div>

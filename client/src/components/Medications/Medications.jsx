@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './medications.css';
-
+import {format } from 'date-fns'
 const Medications = ({ userId }) => {
     const [medications, setMedications] = useState([]); // Лекарства в виде массива
     const [loading, setLoading] = useState(true); // Состояние загрузки
@@ -91,12 +91,18 @@ const Medications = ({ userId }) => {
                                     {visibleDescriptions[medication._id] && (
                                         <p>
                                             <strong>Description:</strong> {medication.description}
-                                            <br />
+                                            <br/>
                                             <strong>Dawka:</strong> {medication.dosage}
+                                            <br/>
+                                            <strong>Rozpoczęcie
+                                                lekkow: </strong> {format(new Date(medication.dateOfStart), 'dd MMM yyyy, HH:mm')}
+                                            <br/>
+                                            <strong>Koniec
+                                                lekkow: </strong> {format(new Date(medication.dateOfEnd), 'dd MMM yyyy, HH:mm')}
                                         </p>
                                     )}
-                        </li>
-                        ))}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>

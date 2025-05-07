@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './medicalHistory.css';
+import { format, parse } from 'date-fns';
 
 const MedicalHistory = ({ userId }) => {
-    const [illness, setIllness] = useState(''); // Ожидается illness как строка
-    const [loading, setLoading] = useState(true); // Состояние загрузки
-    const [error, setError] = useState(null); // Состояние ошибки
-    const [isModalOpen, setIsModalOpen] = useState(false); // Управляет состоянием модального окна
+    const [illness, setIllness] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Функция для получения illness из API
+    // Получение данных от сервера
     useEffect(() => {
         const fetchMedicalHistory = async () => {
             try {
@@ -23,40 +24,93 @@ const MedicalHistory = ({ userId }) => {
                 }
 
                 const data = await response.json();
-                console.log(data)
-                setIllness(data.illnessDescription || 'No illness history available'); // Обновляем illness
+                console.log(data);
+                setIllness(data.illnessDescription || 'No illness history available');
             } catch (err) {
                 console.error(err);
                 setError(err.message || 'Error fetching data');
-                setIllness(''); // Очищаем illness в случае ошибки
+                setIllness('');
             } finally {
-                setLoading(false); // Завершаем загрузку
+                setLoading(false);
             }
         };
 
         if (userId) {
-            fetchMedicalHistory(); // Вызываем функцию только если есть userId
+            fetchMedicalHistory();
         }
     }, [userId]);
 
-    // Состояние загрузки
     if (loading) {
         return <p className="medical-history-loading">Loading medical history...</p>;
     }
 
-    // Состояние ошибки
     if (error) {
         return <p className="medical-history-error">Error: {error}</p>;
     }
 
+    // Парсинг строки медицинской истории
+    const parseIllnessData = (text) => {
+        // Регулярное выражение для поиска дат
+        const dateRegex = /(\d{4}-\d{2}-\d{2})|(\d{1,2} [A-Za-z]{3} \d{4})|(\d{2}\.\d{2}\.\d{4})/g;
+
+        let match;
+        const result = [];
+        let lastIndex = 0;
+
+        // Находим даты и формируем частичные строки
+        while ((match = dateRegex.exec(text)) !== null) {
+            // Если между последним найденным индексом и текущей датой была информация
+            if (lastIndex < match.index) {
+                const entryText = text.slice(lastIndex, match.index).trim();
+                if (entryText) {
+                    result.push(entryText); // Добавляем остаток текста перед новой датой
+                }
+            }
+
+            // Преобразование даты
+            let date = match[0];
+            if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                date = format(parse(date, 'yyyy-MM-dd', new Date()), 'dd.MM.yyyy');
+            } else if (/^\d{1,2} [A-Za-z]{3} \d{4}$/.test(date)) {
+                date = format(parse(date, 'dd MMM yyyy', new Date()), 'dd.MM.yyyy');
+            }
+
+            // Добавляем дату в массив
+            result.push(date);
+            lastIndex = dateRegex.lastIndex; // Обновляем текущую позицию
+        }
+
+        // Добавляем остаток текста (после последней даты)
+        if (lastIndex < text.length) {
+            const remainingText = text.slice(lastIndex).trim();
+            if (remainingText) {
+                result.push(remainingText);
+            }
+        }
+
+        // Собираем результат в формате "Дата - Описание"
+        const formattedResult = [];
+        for (let i = 0; i < result.length; i++) {
+            const item = result[i];
+            const nextItem = result[i + 1] || ''; // Текст после даты
+            if (/\d{2}\.\d{2}\.\d{4}/.test(item)) {
+                formattedResult.push(`${item} - ${nextItem}`);
+                i++; // Пропускаем следующий элемент, так как он уже добавлен
+            }
+        }
+
+        return formattedResult;
+    };
+
+    // Отформатированная медицинская история
+    const formattedIllnesses = parseIllnessData(illness);
+
     return (
         <>
-            {/* Кнопка для открытия модального окна */}
             <button className="medical-history-button" onClick={() => setIsModalOpen(true)}>
                 Open Medical History
             </button>
 
-            {/* Модальное окно */}
             {isModalOpen && (
                 <div className="medical-history-modal">
                     <div className="medical-history-modal-content">
@@ -67,7 +121,19 @@ const MedicalHistory = ({ userId }) => {
                             ✖
                         </button>
                         <h2 className="medical-history-modal-title">Your Medical History</h2>
-                        <p className="medical-history-modal-illness">{illness}</p>
+
+                        {/* Выводим данные в виде списка */}
+                        {formattedIllnesses.length > 0 ? (
+                            <ul className="medical-history-list">
+                                {formattedIllnesses.map((item, index) => (
+                                    <li key={index} className="medical-history-item">
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No medical history available.</p>
+                        )}
                     </div>
                 </div>
             )}

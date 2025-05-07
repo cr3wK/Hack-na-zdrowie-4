@@ -69,14 +69,14 @@ export default function RecordingModal({ setShowModal }) {
     >
       <div className='modal'>
         <div ref={selectBlockRef}>
-          <h2>Select type</h2>
+          <h2>Wybierz typ</h2>
           <select onChange={onChange}>
             <option value='audio'>Audio</option>
-            <option value='video'>Video</option>
+            <option value='video'>Wideo</option>
           </select>
         </div>
 
-        {isRecordingStarted() && <p>{recording ? 'Recording...' : 'Paused'}</p>}
+        {isRecordingStarted() && <p>{recording ? 'Nagrywanie...' : 'Pauza'}</p>}
 
         <video ref={videoRef} autoPlay muted />
 

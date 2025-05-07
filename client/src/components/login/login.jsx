@@ -22,22 +22,22 @@ export const Login = () => {
 
     return (
         <div className="LoginContainer">
-            <h1>Log in</h1>
+            <h1>Logowanie</h1>
             <input
                 className="Name"
-                placeholder="Username"
+                placeholder="E-mail"
                 value={userMail}
                 onChange={(e) => setUserMail(e.target.value)}
             />
             <input
                 className="Password"
                 type="password"
-                placeholder="Password"
+                placeholder="Hasło"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button className="LoginButton" type="submit" onClick={hanLogin}>
-                Log In
+                Zaloguj się
             </button>
         </div>
     );

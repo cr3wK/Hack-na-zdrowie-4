@@ -173,3 +173,136 @@
     background: #fbfbfb;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+/* Отображение элементов события в строку */
+.all-events-list .event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Для маленьких экранов */
+}
+
+.event-date {
+    font-weight: bold;
+    min-width: 90px;
+    color: #333;
+}
+
+.event-title {
+    flex-grow: 1;
+    color: #444;
+    word-break: break-word;
+}
+.all-events-list .event-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #ffeeba;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+    flex-wrap: nowrap; /* Важное: всё в одну строку */
+}
+
+.event-date {
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+}
+
+.event-title {
+    flex-grow: 1;
+    color: #444;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.delete-event-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.delete-event-btn:hover {
+    color: #a72229;
+}
+/* Универсальный контейнер кнопок для событий */
+.event-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* Поле ввода при редактировании */
+.edit-input {
+    flex-grow: 1;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    max-width: 100%;
+}
+
+/* Кнопки редактирования, сохранения и отмены */
+.edit-event-btn,
+.save-btn,
+.cancel-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.edit-event-btn:hover {
+    color: #007bff;
+}
+
+.save-btn:hover {
+    color: #28a745;
+}
+
+.cancel-btn:hover {
+    color: #dc3545;
+}
+.events-list li,
+.all-events-list .event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #ffeeba;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+    flex-wrap: nowrap;
+}
+.input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.add-event-input {
+    flex: 1;
+    max-width: 220px;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

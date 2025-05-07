@@ -77,7 +77,7 @@ export default function MessageInput({ sendMessage }) {
       <input
         type='text'
         autoFocus
-        placeholder='Message...'
+        placeholder='Wiadomość...'
         value={text}
         onChange={(e) => setText(e.target.value)}
         ref={inputRef}

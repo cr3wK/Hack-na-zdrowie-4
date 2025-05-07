@@ -21,7 +21,7 @@ export const CalendarComponent = () => {
 
     // Добавление нового события
     const handleAddEvent = () => {
-        const eventTitle = prompt("Enter event title:");
+        const eventTitle = prompt("Podaj nazwę wydarzenia:");
         if (eventTitle && eventTitle.trim() !== "") {
             const newEvent = { date: date.toDateString(), title: eventTitle.trim() };
             setEvents((prevEvents) => [...prevEvents, newEvent]);
@@ -61,7 +61,7 @@ export const CalendarComponent = () => {
                     <Calendar
                         onChange={(selectedDate) => setDate(selectedDate)} // Установить выбранную дату
                         value={date}
-                        locale="en-US"
+                        locale="pl-PL"
                         tileClassName={addClassToEvents} // Добавляем подсветку
                     />
 
@@ -72,34 +72,44 @@ export const CalendarComponent = () => {
 
                     {/* События выбранного дня */}
                     <div>
-                        <h3>Events for {date.toDateString()}:</h3>
+                        <h3>Wydarzenia na {date.toLocaleDateString("pl-PL")}:</h3>
                         {eventsForDay.length > 0 ? (
                             <ul className="events-list">
                                 {eventsForDay.map((event, i) => (
                                     <li key={i}>
                                         {event.title}
-                                        <button
-                                            className="delete-event-btn"
-                                            onClick={() => handleDeleteEvent(event)}
-                                        >
-                                            🗑
-                                        </button>
+                                        <div>
+                                            <button
+                                                className="edit-event-btn"
+                                                onClick={() => {}}
+                                                title="Edytuj wydarzenie"
+                                            >
+                                                ✏️
+                                            </button>
+                                            <button
+                                                className="delete-event-btn"
+                                                onClick={() => handleDeleteEvent(event)}
+                                            >
+                                                🗑
+                                            </button>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
                         ) : (
-                            <p>No events for this day</p>
+                            <p>Brak wydarzeń na ten dzień</p>
                         )}
                     </div>
 
                     {/* Общий список событий */}
                     {events.length > 0 && (
                         <div className="all-events-container">
-                            <h3>All Events:</h3>
+                            <h3>Wszystkie wydarzenia:</h3>
                             <ul className="all-events-list">
                                 {events.map((event, i) => (
-                                    <li key={i}>
-                                        <strong>{event.date}</strong>: {event.title}
+                                    <li key={i} className="event-item">
+                                        <div className="event-date">{new Date(event.date).toLocaleDateString("pl-PL")}</div>
+                                        <div className="event-title">{event.title}</div>
                                         <button
                                             className="delete-event-btn"
                                             onClick={() => handleDeleteEvent(event)}
@@ -107,6 +117,7 @@ export const CalendarComponent = () => {
                                             🗑
                                         </button>
                                     </li>
+
                                 ))}
                             </ul>
                         </div>

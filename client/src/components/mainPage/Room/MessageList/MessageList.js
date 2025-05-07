@@ -27,7 +27,7 @@ export default function MessageList({ log, messages, removeMessage }) {
 
   return (
     <div className='container message'>
-      <h2>Messages</h2>
+      <h2>Wiadomości</h2>
       <ul className='list message'>
         {messages.map((message) => (
           <MessageItem

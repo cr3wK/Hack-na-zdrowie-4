@@ -62,9 +62,9 @@ export function MainPage({ userSurname,phoneNumber = 'number', userId, userName 
     // Determine the welcome message based on specialization
     const getWelcomeMessage = () => {
         if (specialization.toLowerCase() === 'doctor') {
-            return `Welcome, Dr. ${userName || 'Guest'}!`;
+            return `Welcome, Dr. ${userName || 'Gość'}!`;
         }
-        return ` ${userName || 'Guest'} ` + `${userSurname}`;
+        return ` ${userName || 'Gość'} ` + `${userSurname}`;
     };
 
     return (
@@ -81,25 +81,25 @@ export function MainPage({ userSurname,phoneNumber = 'number', userId, userName 
                 {/* User ID (conditionally display) */}
                 {userId && (
                     <p className="main-page-user-id">
-                        <strong>User ID:</strong> {userId}
+                        <strong>ID użytkownika:</strong> {userId}
                     </p>
                 )}
                 {/* Phone Number */}
                 {phoneNumber && (
                     <p className="user-phone-number">
-                        <strong>Phone Number:</strong> {phoneNumber}
+                        <strong>Numer telefonu:</strong> {phoneNumber}
                     </p>
                 )}
                 {/* Specialization (conditionally display, only if non-empty) */}
                 {specialization && (
                     <p className="main-page-specialization">
-                        <strong>Specialization:</strong> {specialization}
+                        <strong>Specializacja:</strong> {specialization}
                     </p>
                 )}
 
                 {/* Description */}
                 <p className="main-page-description">
-                    Here you can manage all your tasks and monitor user's vitals.
+                    Tutaj można zarządzać wszystkimi zadaniami i monitorować parametry życiowe użytkowników.
                 </p>
 
                 {/* Pulse Status (conditionally display based on specialization) */}
@@ -118,7 +118,7 @@ export function MainPage({ userSurname,phoneNumber = 'number', userId, userName 
                 )}
                 {!specialization && (
                     <section className="medication-section">
-                        <h2 className="section-title">Medications</h2>
+                        <h2 className="section-title">Leki</h2>
                         <Medications userId={userId} />
 
                     </section>
@@ -135,7 +135,7 @@ export function MainPage({ userSurname,phoneNumber = 'number', userId, userName 
                         <strong></strong> {patient.name}
 
                         <div className="bartel-scale">
-                            <span className="bartel-scale-label">Barthel Scale:</span>
+                            <span className="bartel-scale-label">Skala Barthela:</span>
                             <div className="bartel-scale-bar">
                                 <span style={{ width: `${patient.bartelScale}%` }}></span>
                             </div>
@@ -147,7 +147,7 @@ export function MainPage({ userSurname,phoneNumber = 'number', userId, userName 
                 {/* Notes Section (conditionally display if userId exists) */}
                 {userId && (
                     <section className="notes-section">
-                        <h2 className="section-title">Your Notes</h2>
+                        <h2 className="section-title">Twoje notatki:</h2>
                         <Notes userId={userId} />
                     </section>
                 )}

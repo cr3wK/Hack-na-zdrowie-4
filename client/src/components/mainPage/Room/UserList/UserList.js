@@ -21,7 +21,7 @@ export default function UserList({ users, onUserClick }) {
 
     return (
         <div className="container user">
-            <h2>Users</h2>
+            <h2>Użytkowniki</h2>
             <ul className="list user">
                 {users.map(({ userId, userName }) => (
                     <li

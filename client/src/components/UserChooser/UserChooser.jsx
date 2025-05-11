@@ -83,7 +83,7 @@ export const UserChooser = () => {
         <div className="user-chooser">
             <h2 className="title">Chats</h2>
             <div className="search-box">
-                <label htmlFor="pesel-search">Search by PESEL:</label>
+                <label htmlFor="pesel-search">Szukac po numerze PESEL:</label>
                 <input
                     type="text"
                     id="pesel-search"

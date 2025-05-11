@@ -108,7 +108,7 @@ const MedicalHistory = ({ userId }) => {
     return (
         <>
             <button className="medical-history-button" onClick={() => setIsModalOpen(true)}>
-                Open Medical History
+                Otwórz historię medyczną
             </button>
 
             {isModalOpen && (
@@ -120,7 +120,8 @@ const MedicalHistory = ({ userId }) => {
                         >
                             ✖
                         </button>
-                        <h2 className="medical-history-modal-title">Your Medical History</h2>
+                        <h2 className="medical-history-modal-title">
+                            Historia medyczna</h2>
 
                         {/* Выводим данные в виде списка */}
                         {formattedIllnesses.length > 0 ? (
@@ -132,7 +133,7 @@ const MedicalHistory = ({ userId }) => {
                                 ))}
                             </ul>
                         ) : (
-                            <p>No medical history available.</p>
+                            <p>Brak dostępnej historii medycznej.</p>
                         )}
                     </div>
                 </div>

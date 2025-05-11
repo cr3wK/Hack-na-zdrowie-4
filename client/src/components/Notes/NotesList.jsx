@@ -14,7 +14,7 @@ const NotesList = ({ notes, deleteNote }) => {
                     />
                 ))
             ) : (
-                <p className="no-notes">No notes added yet.</p>
+                <p className="no-notes">Nie masz notatek.</p>
             )}
         </ul>
     );

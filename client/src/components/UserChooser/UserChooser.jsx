@@ -113,7 +113,7 @@ export const UserChooser = () => {
                     ))}
                 </ul>
             ) : (
-                <p>No rooms found.</p>
+                <p>Nie masz czatów.</p>
             )}
         </div>
     );

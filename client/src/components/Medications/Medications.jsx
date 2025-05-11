@@ -66,7 +66,7 @@ const Medications = ({ userId }) => {
         <>
             {/* Кнопка для открытия модального окна */}
             <button className="medications-button" onClick={() => setIsModalOpen(true)}>
-                Show Medications
+                Pokaż leki
             </button>
 
             {/* Модальное окно с медикаментами */}
@@ -78,19 +78,19 @@ const Medications = ({ userId }) => {
                             onClick={() => setIsModalOpen(false)}>
                             ✖
                         </button>
-                        <h2 className="medications-title">Your Medications</h2>
+                        <h2 className="medications-title">Twoje leki</h2>
                         <ul className="medications-list">
                             {medications.map((medication) => (
                                 <li key={medication._id} className="medications-item">
-                                    <p><strong>Name:</strong> {medication.name}</p>
+                                    <p><strong>Nazwa:</strong> {medication.name}</p>
                                     <button
                                         className="show-description-button"
                                         onClick={() => toggleDescription(medication._id)}>
-                                        {visibleDescriptions[medication._id] ? 'Hide Description' : 'Show Description'}
+                                        {visibleDescriptions[medication._id] ? 'Ukryj opis' : 'Pokaż opis'}
                                     </button>
                                     {visibleDescriptions[medication._id] && (
                                         <p>
-                                            <strong>Description:</strong> {medication.description}
+                                            <strong>Opis:</strong> {medication.description}
                                             <br/>
                                             <strong>Dawka:</strong> {medication.dosage}
                                             <br/>

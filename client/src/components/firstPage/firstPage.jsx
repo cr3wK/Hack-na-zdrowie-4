@@ -104,7 +104,7 @@ export const FirstPage = () => {
             {/* Контент страницы */}
             <div className="firstPage-container">
                 <main className="container">
-                    <h1>WITAJ W ZswODiH</h1>
+                    <h1>WITAMY W E-HOSP</h1>
                     <p className="subtitle">
                         Łatwy dostęp do informacji i możliwość rozmowy z lekarzem lub opiekunem.
                     </p>

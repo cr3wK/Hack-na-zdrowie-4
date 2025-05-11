@@ -14,12 +14,12 @@ const NotesInput = ({ addNote }) => {
         <form className="notes-input" onSubmit={handleSubmit}>
             <input
                 type="text"
-                placeholder="Write a note..."
+                placeholder="Napisz notatkę..."
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 required
             />
-            <button type="submit">Add</button>
+            <button type="submit">+</button>
         </form>
     );
 };

@@ -17,7 +17,8 @@
     "resolve-url-loader": "5.0.0",
     "rxjs": "^7.8.2",
     "sass": "1.87.0",
-    "sass-loader": "16.0.5"
+    "sass-loader": "16.0.5",
+    "yarn": "^1.22.22"
   },
   "scripts": {
     "dev:client": "yarn --cwd client start",

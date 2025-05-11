@@ -42,7 +42,7 @@ const Notes = ({ userId }) => {
 
     return (
         <div className="notes">
-            <h2>Notes</h2>
+            <h2>Notatki</h2>
             {userId ? (
                 <>
                     <NotesInput addNote={addNote} />

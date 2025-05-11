@@ -81,15 +81,15 @@ export const UserChooser = () => {
 
     return (
         <div className="user-chooser">
-            <h2 className="title">Chats</h2>
+            <h2 className="title">Czaty</h2>
             <div className="search-box">
-                <label htmlFor="pesel-search">Szukac po numerze PESEL:</label>
+                <label htmlFor="pesel-search">Szukać po numerze PESEL:</label>
                 <input
                     type="text"
                     id="pesel-search"
                     value={searchPesel}
                     onChange={(e) => setSearchPesel(e.target.value)}
-                    placeholder="Enter patient PESEL"
+                    placeholder="Wprowadź PESEL pacjenta"
                 />
             </div>
             {filteredRooms.length > 0 ? (
